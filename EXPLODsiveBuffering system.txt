@@ -402,7 +402,7 @@ ignoreHitPause = 1
 
 
 ;==============================================================================================
-;Relase button inputs don't persist through hitpause!
+;Release button inputs don't persist through hitpause!
 ;==============================================================================================
 
 [State -1, Release x]
@@ -772,6 +772,10 @@ ignoreHitPause = 1
 ;===============================<QUARTER CIRCLE FORWARD/BACK>==================================
 ;==============================================================================================
 
+;==============================================================================================
+;the standard quarter-circle motion we all know and love
+;==============================================================================================
+
 ;================================<DOWN, DOWN-RIGHT, RIGHT>=====================================
 [State -1, D, DR, R: Down]
 type = Explod
@@ -868,14 +872,13 @@ ignoreHitPause = 1
 ;couldn't input a QCF during a long hitpause, wait for the hitpause to end, and then input another QCF
 ;and still get a QCFx2 motion, after all!
 
-
 ;Also, do note that Capcom games use a command shortcut for QCFx2/QCBx2 motions; a D, DF, F, D, DF
 ;will work just as well as a D, DF, F, D, DF, F motion!
 ;==============================================================================================
 
 ;===========================<DOUBLE DOWN, DOWN-RIGHT, RIGHT>===============================
 ;this is almost identical to the D, DR, R: Right explod; the only difference is that it has a
-;RemoveTime of 10, because it shouldn't persist through hitpause!
+;RemoveTime of 10 (with no additional ifElse statements), because it shouldn't persist through hitpause!
 [State -1, D, DR, R, D, DR, R: 1st Right]
 type = Explod
 triggerAll = NumExplod(90010003)
@@ -1136,7 +1139,7 @@ ignoreHitPause = 1
 ;the starting QCF/QCB and proceed directly to the final input of the command (the command would here
 ;be rendered as "QCF, B"/"QCB, F"). It also can be performed using a QCF, HCB/QCB, HCF motion, with
 ;the additional quirk that the user can proceed immediately to the final input of the command no matter
-;where they are in the half circl motion. So, for example, the user could perform QCB, DB, D, F, and
+;where they are in the half circle motion. So, for example, the user could perform QCB, DB, D, F, and
 ;still get the move.
 
 ;What this ends up looking like translated to the buffer system is that, for instance, the explod representing
@@ -1279,7 +1282,6 @@ ignoreHitPause = 1
 ;==============================================================================================
 ;Nothing special here, just the standard dragon punch motion!
 ;==============================================================================================
-
 
 ;================================<RIGHT, DOWN, DOWN-RIGHT>=====================================
 [State -1, R, D, DR: Right]
@@ -2739,7 +2741,6 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-
 [State -1, 360/U, L, D, R: Down]
 type = Explod
 triggerAll = NumExplod(90011704) || NumExplod(90011701)
@@ -4015,8 +4016,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-
-[State -1, L, R, DR, D, DL, L, R: Right]
+[State -1, L, DL, D, DR, R, L: Right]
 type = Explod
 triggerAll = NumExplod(90032104)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -4028,7 +4028,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, R, DR, D, DL, L, R: Down-Right]
+[State -1, L, DL, D, DR, R, L: Down-Right]
 type = Explod
 triggerAll = NumExplod(90032106)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -4040,7 +4040,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, R, DR, D, DL, L, R: Down]
+[State -1, L, DL, D, DR, R, L: Down]
 type = Explod
 triggerAll = NumExplod(90032103) || NumExplod(90032106)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -4052,7 +4052,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, R, DR, D, DL, L, R: Down-Left]
+[State -1, L, DL, D, DR, R, L: Down-Left]
 type = Explod
 triggerAll = NumExplod(90032102)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -4064,7 +4064,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, R, DR, D, DL, L, R: 2nd Left]
+[State -1, L, DL, D, DR, R, L: 2nd Left]
 type = Explod
 triggerAll = NumExplod(90032101) || NumExplod(90032102)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -4311,14 +4311,14 @@ ignoreHitPause = 1
 ;==============================================================================================
 
 ;==============================================================================================
-;Here, we override the MUGEN's default guard system, and add our own triggers. This will ensure
-;that the player can always block as long as they are holding a direction away from the opponent.
+;Here, we override the MUGEN's default guard system when the character is airborne, and add our own triggers.
+;This will ensure that the player can always block as long as they are holding a direction away from the opponent.
 ;This block of code also adds "chicken guarding", which is allowing the player to air guard by holding
 ;not only back, but down-back and up-back.
 
 ;It is also recommended that you also override the guard states (120, 130, 131, 132, 140, 150, 151, 152, 154, 155)
 ;with an updated version that uses the EXPLODsive buffering system. A copy of those fixed states
-;can be found in this character, and also in the release thread (here:PUT LINK HERE).
+;can be found (here:PUT LINK HERE).
 ;==============================================================================================
 
 [State -1, AssertSpecial: NoAirGuard]
@@ -4327,13 +4327,29 @@ trigger1 = 1
 flag = NoAirGuard
 ignoreHitPause = 0
 
-[State -1, AssertSpecial: No StandGuard and NoCrouchGuard when landing from jump after switching sides]
+[State -1, Air Blocking]
+type = ChangeState
+triggerAll = !AILevel
+triggerAll = InGuardDist
+triggerAll = StateType = A
+triggerAll = ctrl
+triggerAll = !(StateNo = [120,155])
+trigger1 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000004)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000006))
+trigger2 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000003))
+trigger3 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000007)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000009))
+value = 120
+
+[State -1, AssertSpecial: No StandGuard and NoCrouchGuard]
 type = AssertSpecial
 trigger1 = P2dist x < 0 && StateType != A
 flag = NoStandGuard
 flag2 = NoCrouchGuard
 ignoreHitPause = 0
 
+;these two ChangeStates are only in use when the character has landed from a jump after switching
+;sides, to get around a MUGEN bug where a character's directions don't switch until a tick has passed,
+;after they've landed from a jump and switched sides. Otherwise, MUGEN's default guard behavior works
+;well enough!
 [State -1, Stand Blocking]
 type = ChangeState
 triggerAll = !AILevel
@@ -4354,17 +4370,6 @@ triggerAll = ctrl
 trigger1 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000003))
 value = 120
 
-[State -1, Air Blocking]
-type = ChangeState
-triggerAll = !AILevel
-triggerAll = InGuardDist
-triggerAll = StateType = A
-triggerAll = ctrl
-triggerAll = !(StateNo = [120,155])
-trigger1 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000004)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000006))
-trigger2 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000003))
-trigger3 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000007)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000009))
-value = 120
 
 
 
