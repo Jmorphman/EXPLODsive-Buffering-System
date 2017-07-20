@@ -170,87 +170,87 @@
 ;BASIC DIRECTIONAL INPUTS (these are active whenever the specified direction is currently being input, and
 ;disappear as soon as they are released. They are used by the system to detect directional release, but can
 ;also be used by you to detect when a specific direction is being input or held down)
-;Down:						90000002
-;Down-right:					90000003
-;Right:						90000006
-;Up-right:					90000009
-;Up:						90000008
-;Up-left:					90000007
-;Left:						90000004
-;Down-left:					90000001
+
+;Down:										90000002
+;Down-right:									90000003
+;Right:										90000006
+;Up-right:									90000009
+;Up:										90000008
+;Up-left:									90000007
+;Left:										90000004
+;Down-left:									90000001
 
 ;BUTTON PRESS
-;x:						90000200
-;y:						90000210
-;z:						90000220
-;a:						90000230
-;b:						90000240
-;c:						90000250
-;start:						90000195
+;x:										90000200
+;y:										90000210
+;z:										90000220
+;a:										90000230
+;b:										90000240
+;c:										90000250
+;start:										90000195
 
 ;BUTTON RELEASE
-;x:						90000205
-;y:						90000215
-;z:						90000225
-;a:						90000235
-;b:						90000245
-;c:						90000255
+;x:										90000205
+;y:										90000215
+;z:										90000225
+;a:										90000235
+;b:										90000245
+;c:										90000255
 
 ;SYSTEM MOTIONS
-;R, R:						90001016
-;L, L:						90001064
-;R, DR, D					90007502
-;L, DL, D					90007552
+;R, R:						(F, F)				90001016
+;L, L:						(B, B)				90001064
+;R, DR, D					(F, DF, D)			90007502
+;L, DL, D					(B, DB, D)			90007552
 
 
 ;SPECIAL/SUPER MOTIONS
-
-;R, R:						90001016
-;L, L:						90001064
-;D, DR, R:					90010006
-;D, DL, L:					90010104
-;R, D, DR:					90010203
-;L, D, DL:					90010301
-;L, DL, D, DR, R:				90010406
-;R, DR, D, DL, L:				90010504
-;(charge) L, R:					90010606
-;(charge) R, L:					90010704
-;(charge) D, U:					90010808
-;360/L, D, R, U:				90011008
-;360/L, U, R, D:				90011102
-;360/D, R, U, L:				90011204
-;360/D, L, U, R:				90011306
-;360/R, D, L, U:				90011408
-;360/R, U, L, D:				90011502
-;360/U, R, D, L:				90011604
-;360/U, L, D, R:				90011706
-;R, D, L, R:					90012016
-;L, D, R, L:					90012114
-;R, L, R:					90012216
-;L, R, L:					90012314
+;D, DR, R:					(QCF)				90010006
+;D, DL, L:					(QCB)				90010104
+;R, D, DR:					(F, D, DF)			90010203
+;L, D, DL:					(B, D, DB)			90010301
+;L, DL, D, DR, R:				(HCF)				90010406
+;R, DR, D, DL, L:				(HCB)				90010504
+;(charge) L, R:					([charge] B, F)			90010606
+;(charge) R, L:					([charge] F, B)			90010704
+;(charge) D, U:					([charge] D, U)			90010808
+;L, D, R, U:					(360)				90011008
+;L, U, R, D:					(360)				90011102
+;D, R, U, L:					(360)				90011204
+;D, L, U, R:					(360)				90011306
+;R, D, L, U:					(360)				90011408
+;R, U, L, D:					(360)				90011502
+;U, R, D, L:					(360)				90011604
+;U, L, D, R:					(360)				90011706
+;R, D, L, R:					(HCB, F)			90012016
+;L, D, R, L:					(HCF, B)			90012114
+;R, L, R:					(F, B, F)			90012216
+;L, R, L:					(B, F, B)			90012314
 
 
-;D, DR, R, D, DR, R:				90030006
-;D, DL, L, D, DL, L:				90030104
-;L, DL, D, DR, R, L, DL, D, DR, R:		90030406
-;R, DR, D, DL, L, R, DR, D, DL, L:		90030504
-;(charge) L, R, L, R:				90030606
-;(charge) R, L, R, L:				90030704
-;(charge) DL, DR, DL, UR:			90030809
-;(charge) DR, DL, DR, UL:			90030907
-;720/L, D, R, U, L, D, R, U:			90031008
-;720/L, U, R, D, L, U, R, D:			90031102
-;720/D, R, U, L, D, R, U, L:			90031204
-;720/D, L, U, R, D, L, U, R:			90031306
-;720/R, D, L, U, R, D, L, U:			90031408
-;720/R, U, L, D, R, U, L, D:			90031502
-;720/U, R, D, L, U, R, D, L:			90031604
-;720/U, L, D, R, U, L, D, R:			90031706
-;R, L, D, R:					90032016
-;L, R, D, L:					90032114
-;D, DR, R, D, L:				90032204
-;D, DL, L, D, R:				90032306
-;x, x, F, a, z:					90040220
+;D, DR, R, D, DR, R:				(QCFx2)				90030006
+;D, DL, L, D, DL, L:				(QCBx2)				90030104
+;L, DL, D, DR, R, L, DL, D, DR, R:		(HCFx2)				90030406
+;R, DR, D, DL, L, R, DR, D, DL, L:		(HCBx2)				90030504
+;(charge) L, R, L, R:				([charge] B, F, B, F)		90030606
+;(charge) R, L, R, L:				([charge] F, B, F, B)		90030704
+;(charge) DL, DR, DL, UR:			([charge] DB, DF, DB, UF)	90030809
+;(charge) DR, DL, DR, UL:			([charge] DF, DB, DF, UB)	90030907
+;L, D, R, U, L, D, R, U:			(720)				90031008
+;L, U, R, D, L, U, R, D:			(720)				90031102
+;D, R, U, L, D, R, U, L:			(720)				90031204
+;D, L, U, R, D, L, U, R:			(720)				90031306
+;R, D, L, U, R, D, L, U:			(720)				90031408
+;R, U, L, D, R, U, L, D:			(720)				90031502
+;U, R, D, L, U, R, D, L:			(720)				90031604
+;U, L, D, R, U, L, D, R:			(720)				90031706
+;R, L, D, R:					(F, HCF)			90032016
+;L, R, D, L:					(B, HCB)			90032114
+;D, DR, R, D, L:				(QCF, HCB)			90032204
+;D, DL, L, D, R:				(QCB, HCF)			90032306
+;D, DR, R, DR, L:				(QCF, DF, B)			90032404
+;D, DL, L, DL, R:				(QCB, DB, F)			90032506
+;x, x, F, a, z:					(Shun Goku Satsu)		90040220
 
 
 
@@ -1184,7 +1184,7 @@ ignoreHitPause = 1
 
 
 ;================<DOWN, DOWN-LEFT, LEFT, DOWN-LEFT, DOWN, DOWN-RIGHT, RIGHT>===================
-[State -1, R, DR, D, DL, L: Left]
+[State -1, D, DL, L, DL, D, DR, R: Left]
 type = Explod
 triggerAll = NumExplod(90010101)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -1196,7 +1196,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, R, DR, D, DL, L: Down-Left]
+[State -1, D, DL, L, DL, D, DR, R: Down-Left]
 type = Explod
 triggerAll = NumExplod(90032304)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -1208,7 +1208,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, R, DR, D, DL, L: Down]
+[State -1, D, DL, L, DL, D, DR, R: Down]
 type = Explod
 triggerAll = NumExplod(90032301) || NumExplod(90032304)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -1220,7 +1220,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, R, DR, D, DL, L: Down-Right]
+[State -1, D, DL, L, DL, D, DR, R: Down-Right]
 type = Explod
 triggerAll = NumExplod(90032302)
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -1232,13 +1232,143 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, R, DR, D, DL, L: Right]
+[State -1, D, DL, L, DL, D, DR, R: Right]
 type = Explod
 triggerAll = NumExplod(90032303) || NumExplod(90032302)
 triggerAll = NumHelper(90000005) && !IsHelper
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90032306
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;=====<QUARTER CIRCLE FORWARD, DOWN-FORWARD, BACK/QUARTER CIRCLE BACK, DOWN-BACK, FORWARD>=====
+;==============================================================================================
+
+;========================<DOWN, DOWN-RIGHT, RIGHT, DOWN-RIGHT, LEFT>===========================
+[State -1, D, DR, R, DR, L: Right]
+type = Explod
+triggerAll = NumExplod(90010003)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90032406
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DR, R, DR, L: Down-Right]
+type = Explod
+triggerAll = NumExplod(90032406)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+anim = 1
+ID = 90032403
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DR, R, DR, L: Down]
+type = Explod
+triggerAll = NumExplod(90032406) || NumExplod(90032403)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
+anim = 1
+ID = 90032402
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DR, R, DR, L: Down-Left]
+type = Explod
+triggerAll = NumExplod(90032406) || NumExplod(90032403) || NumExplod(90032402)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+anim = 1
+ID = 90032401
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DR, R, DR, L: Left]
+type = Explod
+triggerAll = NumExplod(90032406) || NumExplod(90032403) || NumExplod(90032402) || NumExplod(90032401)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90032404
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=========================<DOWN, DOWN-LEFT, LEFT, DOWN-LEFT, RIGHT>============================
+[State -1, D, DL, L, DL, R: Left]
+type = Explod
+triggerAll = NumExplod(90010101)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90032504
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DL, L, DL, R: Down-Left]
+type = Explod
+triggerAll = NumExplod(90032504)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+anim = 1
+ID = 90032501
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DL, L, DL, R: Down]
+type = Explod
+triggerAll = NumExplod(90032504) || NumExplod(90032501)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
+anim = 1
+ID = 90032502
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DL, L, DL, R: Down-Right]
+type = Explod
+triggerAll = NumExplod(90032504) || NumExplod(90032501) || NumExplod(90032502)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+anim = 1
+ID = 90032503
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DL, L, DL, R: Right]
+type = Explod
+triggerAll = NumExplod(90032504) || NumExplod(90032501) || NumExplod(90032502) || NumExplod(90032503)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90032506
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
