@@ -48,6 +48,9 @@
 ;SYSTEM MOTIONS
 ;R, R:						(F, F)				90001016
 ;L, L:						(B, B)				90001064
+;D, U:						(D, U)				90000408
+;U, U:						(U, U)				90000518
+;D, D:						(D, D)				90000562
 ;R, DR, D					(F, DF, D)			90007502
 ;L, DL, D					(B, DB, D)			90007552
 
@@ -643,7 +646,7 @@ ignoreHitPause = 1
 ;Super jump commands can be done with any down directional input, followed by any up directional
 ;==============================================================================================
 
-;=======================================<RIGHT, RIGHT>=========================================
+;=======================================<DOWN, UP>=========================================
 [State -1, D, U: Down]
 type = Explod
 triggerAll = NumHelper(90000005) && !IsHelper
@@ -664,6 +667,115 @@ trigger1 = Helper(90000005), command = "up" || Helper(90000005), command = "ufwd
 trigger1 = Helper(90000005), command != "down"
 anim = 1
 ID = 90000408
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+;==============================================================================================
+;=====================================<UP, UP/DOWN, DOWN>======================================
+;==============================================================================================
+
+;==============================================================================================
+;Pretty similar to the Forward, Forward/Back, Back commands, only we don't need to worry about
+;the player's facing or anything, since all the inputs are either down or up!
+
+;Also of note is that any up/down direction may be used to activate this command (i.e., a UF, UF
+;will still be considered a U, U command).
+;==============================================================================================
+
+;=======================================<UP, UP>=========================================
+[State -1, U, U: 1st Up]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "up" || Helper(90000005), command = "ufwd" || Helper(90000005), command = "uback"
+trigger1 = Helper(90000005), command != "down"
+anim = 1
+ID = 90000508
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, U, U: Neutral]
+type = Explod
+triggerAll = (NumExplod(90000007) || NumExplod(90000008) || NumExplod(90000009)) && NumExplod(90000508)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command != "up" && Helper(90000005), command != "holdup"
+trigger1 = Helper(90000005), command != "down" && Helper(90000005), command != "holddown" && Helper(90000005), command != "back" && Helper(90000005), command != "holdback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "holdfwd"
+anim = 1
+ID = 90000505
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Remove U, U: Neutral]
+type = RemoveExplod
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = NumExplod(90000004) || NumExplod(90000001) || NumExplod(90000002) || NumExplod(90000003) || NumExplod(90000006)
+trigger2 = !NumExplod(90000508)
+ID = 90000505
+ignoreHitPause = 1
+
+[State -1, U, U: 2nd Up]
+type = Explod
+triggerAll = NumExplod(90000505) && NumExplod(90000508)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "up" || Helper(90000005), command = "ufwd" || Helper(90000005), command = "uback"
+trigger1 = Helper(90000005), command != "down"
+anim = 1
+ID = 90000518
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=========================================<DOWN,DOWN>==========================================
+[State -1, D, D: 1st Down]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "down" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "dback"
+trigger1 = Helper(90000005), command != "up"
+anim = 1
+ID = 90000552
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, D: Neutral]
+type = Explod
+triggerAll = (NumExplod(90000001) || NumExplod(90000002) || NumExplod(90000003)) && NumExplod(90000552)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command != "down" && Helper(90000005), command != "holddown"
+trigger1 = Helper(90000005), command != "fwd" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "holdback" && Helper(90000005), command != "up" && Helper(90000005), command != "holdup"
+anim = 1
+ID = 90000555
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Remove D, D: Neutral]
+type = RemoveExplod
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = NumExplod(90000004) || NumExplod(90000007) || NumExplod(90000008) || NumExplod(90000009) || NumExplod(90000006)
+trigger2 = !NumExplod(90000552)
+ID = 90000555
+ignoreHitPause = 1
+
+[State -1, D, D: 2nd Down]
+type = Explod
+triggerAll = NumExplod(90000555) && NumExplod(90000552)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "down" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "dback"
+trigger1 = Helper(90000005), command != "up"
+anim = 1
+ID = 90000562
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
