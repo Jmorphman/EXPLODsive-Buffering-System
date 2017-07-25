@@ -55,7 +55,7 @@
 ;L, DL, D					(B, DB, D)			90007552
 
 
-;SPECIAL/SUPER MOTIONS
+;SPECIAL MOTIONS
 ;D, DR, R:					(QCF)				90010006
 ;D, DL, L:					(QCB)				90010104
 ;R, D, DR:					(F, D, DF)			90010203
@@ -77,8 +77,11 @@
 ;L, D, R, L:					(HCF, B)			90012114
 ;R, L, R:					(F, B, F)			90012216
 ;L, R, L:					(B, F, B)			90012314
+;D, DR, R, UR:					(QCF, UF)			90012409
+;D, DL, L, UL:					(QCB, UB)			90012507
+;D, D:						([special] D, D)		90012602
 
-
+;SUPER MOTIONS
 ;D, DR, R, D, DR, R:				(QCFx2)				90030006
 ;D, DL, L, D, DL, L:				(QCBx2)				90030104
 ;L, DL, D, DR, R, L, DL, D, DR, R:		(HCFx2)				90030406
@@ -1382,6 +1385,69 @@ triggerAll = NumHelper(90000005) && !IsHelper
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90032506
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;============<QUARTER CIRCLE FORWARD, UP-FORWARD/QUARTER CIRCLE BACK, UP-BACK>=================
+;==============================================================================================
+
+;==============================================================================================
+;Also known as a "Tiger Knee" motion. Works much the same way the double quarter circle motions
+;work.
+;==============================================================================================
+
+;===========================<DOWN, DOWN-RIGHT, RIGHT, UP-RIGHT>================================
+[State -1, D, DR, R, UR: Right]
+type = Explod
+triggerAll = NumExplod(90010003)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90012406
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DR, R, UR: Up-Right]
+type = Explod
+triggerAll = NumExplod(90012406)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+anim = 1
+ID = 90012409
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=============================<DOWN, DOWN-LEFT, LEFT, UP-LEFT>=================================
+[State -1, D, DL, L, DL, R: Left]
+type = Explod
+triggerAll = NumExplod(90010101)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90012504
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, D, DL, L, DL, R: Up-Left]
+type = Explod
+triggerAll = NumExplod(90012504)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+anim = 1
+ID = 90012507
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3989,6 +4055,76 @@ triggerAll = NumHelper(90000005) && !IsHelper
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90012314
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+;==============================================================================================
+;==================================<(SPECIAL) DOWN, DOWN >=====================================
+;==============================================================================================
+
+;==============================================================================================
+;This explod is for the special move variant of the D, D motion; the only difference between this
+;and the one above is that this has a RemoveTime of 10, like every other special move, since it's
+;designed to be used for special moves (as opposed to the earlier D, D command, which was for air
+;dashing).
+;==============================================================================================
+
+[State -1, (special) D, D: 2nd Down]
+type = Explod
+triggerAll = NumExplod(90000555) && NumExplod(90000552)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "down" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "dback"
+trigger1 = Helper(90000005), command != "up"
+anim = 1
+ID = 90012602
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;====================================<DOWN, DOWN, DOWN>========================================
+;==============================================================================================
+
+;==============================================================================================
+;And this is just extending the principle futher, to a third down input! This is typically used
+;super commands.
+;==============================================================================================
+
+[State -1, D, D, D: 2nd Neutral]
+type = Explod
+triggerAll = (NumExplod(90000001) || NumExplod(90000002) || NumExplod(90000003)) && NumExplod(90012602)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command != "down" && Helper(90000005), command != "holddown"
+trigger1 = Helper(90000005), command != "fwd" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "holdback" && Helper(90000005), command != "up" && Helper(90000005), command != "holdup"
+anim = 1
+ID = 90032605
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Remove D, D, D: 2nd Neutral]
+type = RemoveExplod
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = NumExplod(90000004) || NumExplod(90000007) || NumExplod(90000008) || NumExplod(90000009) || NumExplod(90000006)
+trigger2 = !NumExplod(90012602)
+ID = 90032605
+ignoreHitPause = 1
+
+[State -1, D, D, D: 3rd Down]
+type = Explod
+triggerAll = NumExplod(90032605) && NumExplod(90012602)
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = Helper(90000005), command = "down" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "dback"
+trigger1 = Helper(90000005), command != "up"
+anim = 1
+ID = 90032602
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
