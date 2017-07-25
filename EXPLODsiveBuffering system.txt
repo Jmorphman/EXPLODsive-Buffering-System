@@ -104,6 +104,7 @@
 ;D, DL, L, D, R:				(QCB, HCF)			90032306
 ;D, DR, R, DR, L:				(QCF, DF, B)			90032404
 ;D, DL, L, DL, R:				(QCB, DB, F)			90032506
+;D, D, D:					(D, D, D)			90032602
 ;x, x, F, a, z:					(Shun Goku Satsu)		90040220
 
 
