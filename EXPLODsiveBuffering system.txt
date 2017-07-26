@@ -1260,8 +1260,21 @@ ignoreHitPause = 1
 ;where they are in the half circle motion. So, for example, the user could perform QCB, DB, D, F, and
 ;still get the move.
 
-;What this ends up looking like translated to the buffer system is that, for instance, the explod representing
-;QCF, DF, B: DB is allowed to be created if an explod exists representing "D", or "DF", or even "F".
+;What this ends up looking like translated to the buffer system is that, for instance, the explod
+;representing QCF, DF, B: DB is allowed to be created if an explod exists representing "D", or "DF",
+;or even "F".
+
+;Do note, however, that unlike all the other SNK-derived commands in this system, this is not a
+;particularly faithful adaptation of the way SNK approaches this command. Instead, we opted to modify
+;it to keep it relatively simple and tried to change the manner in which the command worked into something
+;that made more sense (to us, at least). The KOF handles it is pretty wild, and pretty complicated, so
+;much so that we're not going to go into deep detail about it here in order to keep things relatively short.
+;But here's a brief overview: the "right/left" input in the initial quarter-circle motion has a longer
+;buffer window than any other command: it lasts for 15 ticks! You can also proceed directly from the "right/left"
+;input from the quarter-circle motion to the final input of the command, with no other inputs in between, if
+;and only if that "right/left" input is held for at least two ticks. And if the player does not complete the
+;command by entering the final input in under 20 ticks from the time that the "right/left" in the initial
+;quarter-circle motion is first input, then the move will not come out.
 ;==============================================================================================
 
 ;========================<DOWN, DOWN-RIGHT, RIGHT, DOWN-RIGHT, LEFT>===========================
