@@ -82,22 +82,22 @@
 ;D, D:						([special] D, D)		90012602
 
 ;SUPER MOTIONS
-;D, DR, R, D, DR, R:				(QCFx2)				90030006
-;D, DL, L, D, DL, L:				(QCBx2)				90030104
-;L, DL, D, DR, R, L, DL, D, DR, R:		(HCFx2)				90030406
-;R, DR, D, DL, L, R, DR, D, DL, L:		(HCBx2)				90030504
-;(charge) L, R, L, R:				([charge] B, F, B, F)		90030606
-;(charge) R, L, R, L:				([charge] F, B, F, B)		90030704
+;D, DR, R, D, DR, R:				(QCFx2)				90030016
+;D, DL, L, D, DL, L:				(QCBx2)				90030114
+;L, DL, D, DR, R, L, DL, D, DR, R:		(HCFx2)				90030416
+;R, DR, D, DL, L, R, DR, D, DL, L:		(HCBx2)				90030514
+;(charge) L, R, L, R:				([charge] B, F, B, F)		90030616
+;(charge) R, L, R, L:				([charge] F, B, F, B)		90030714
 ;(charge) DL, DR, DL, UR:			([charge] DB, DF, DB, UF)	90030809
 ;(charge) DR, DL, DR, UL:			([charge] DF, DB, DF, UB)	90030907
-;L, D, R, U, L, D, R, U:			(720)				90031008
-;L, U, R, D, L, U, R, D:			(720)				90031102
-;D, R, U, L, D, R, U, L:			(720)				90031204
-;D, L, U, R, D, L, U, R:			(720)				90031306
-;R, D, L, U, R, D, L, U:			(720)				90031408
-;R, U, L, D, R, U, L, D:			(720)				90031502
-;U, R, D, L, U, R, D, L:			(720)				90031604
-;U, L, D, R, U, L, D, R:			(720)				90031706
+;L, D, R, U, L, D, R, U:			(720)				90031018
+;L, U, R, D, L, U, R, D:			(720)				90031112
+;D, R, U, L, D, R, U, L:			(720)				90031214
+;D, L, U, R, D, L, U, R:			(720)				90031316
+;R, D, L, U, R, D, L, U:			(720)				90031418
+;R, U, L, D, R, U, L, D:			(720)				90031512
+;U, R, D, L, U, R, D, L:			(720)				90031614
+;U, L, D, R, U, L, D, R:			(720)				90031716
 ;R, L, D, R:					(F, HCF)			90032016
 ;L, R, D, L:					(B, HCB)			90032114
 ;D, DR, R, D, L:				(QCF, HCB)			90032204
@@ -118,7 +118,7 @@
 ;is currently being input, and disappear as soon as they are released (via a series of RemoveExplods
 ;at the bottom of the Buffering system code block). They are used by the system to detect directional
 ;releases, but can also be used outside of the Buffering system code block to detect when a specific
-;direction is being input or held down)
+;direction is being input or held down.
 ;==============================================================================================
 
 [State -1, Release Down Detector]
@@ -922,7 +922,7 @@ ignoreHitPause = 1
 ;a release input, so that you're allowed to hold the direction that the command starts with for
 ;however long you want, then input the rest of the command, and still get the move. This is why
 ;in MUGEN, people typically write all their character's commands as starting with a release input;
-;however, things are a bit more complicated outside of MUGEN (and thus, more complciated in this
+;however, things are a bit more complicated outside of MUGEN (and thus, more complicated in this
 ;buffer too). In most games, the window of time a player has to input the next command in sequence
 ;after performing a release input is shorter than the window of time they have to input the next
 ;command after a press input. For example, in Street Fighter III, if you want to perform a quarter-
@@ -1085,7 +1085,7 @@ triggerAll = NumExplod(90010003)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030005
+ID = 90030006
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -1093,7 +1093,7 @@ ignoreHitPause = 1
 
 [State -1, D, DR, R, D, DR, R: 2nd Down]
 type = Explod
-triggerAll = NumExplod(90030005)
+triggerAll = NumExplod(90030006)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
 anim = 1
@@ -1121,7 +1121,7 @@ triggerAll = NumExplod(90030003)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030006
+ID = 90030016
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -1135,7 +1135,7 @@ triggerAll = NumExplod(90010101)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030105
+ID = 90030104
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -1143,7 +1143,7 @@ ignoreHitPause = 1
 
 [State -1, D, DL, L, D, DL, L: 2nd Down]
 type = Explod
-triggerAll = NumExplod(90030105)
+triggerAll = NumExplod(90030104)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
 anim = 1
@@ -1171,7 +1171,7 @@ triggerAll = NumExplod(90030101)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030104
+ID = 90030114
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -1856,7 +1856,7 @@ triggerAll = NumExplod(90010403)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030405
+ID = 90030406
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -1864,7 +1864,7 @@ ignoreHitPause = 1
 
 [State -1, L, DL, D, DR, R, L, DL, D, DR, R: 2nd Left]
 type = Explod
-triggerAll = NumExplod(90030405)
+triggerAll = NumExplod(90030406)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -1916,7 +1916,7 @@ triggerAll = NumExplod(90030403)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030406
+ID = 90030416
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -1931,7 +1931,7 @@ triggerAll = NumExplod(90010501)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030505
+ID = 90030504
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -1939,7 +1939,7 @@ ignoreHitPause = 1
 
 [State -1, R, DR, D, DL, L, R, DR, D, DL, L: 2nd Right]
 type = Explod
-triggerAll = NumExplod(90030505)
+triggerAll = NumExplod(90030504)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -1991,7 +1991,7 @@ triggerAll = NumExplod(90030501)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030504
+ID = 90030514
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -2072,7 +2072,7 @@ var(48) = -1
 ;value of the charge buffer, var(48).
 ;==============================================================================================
 
-;=====================================<CHARGE RIGHT, LEFT>=====================================
+;=====================================<CHARGE LEFT, RIGHT>=====================================
 ;we only need one command explod for this move, since we already know that the player has been
 ;inputting the opposite direction!
 [State -1, Charge Left, Right: Right]
@@ -2089,7 +2089,7 @@ ignoreHitPause = 1
 
 
 
-;=====================================<CHARGE LEFT, RIGHT>=====================================
+;=====================================<CHARGE RIGHT, LEFT>=====================================
 [State -1, Charge Right, Left: Left]
 type = Explod
 triggerAll = var(48) > 0
@@ -2121,7 +2121,7 @@ triggerAll = var(48) > 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030605
+ID = 90030606
 removeTime = var(48)
 pauseMoveTime = var(48)
 superMoveTime = var(48)
@@ -2129,7 +2129,7 @@ ignoreHitPause = 1
 
 [State -1, Charge Left, Right, Left, Right: 2nd Left]
 type = Explod
-triggerAll = NumExplod(90030605)
+triggerAll = NumExplod(90030606)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -2145,7 +2145,7 @@ triggerAll = NumExplod(90030604)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030606
+ID = 90030616
 removeTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -2160,7 +2160,7 @@ triggerAll = var(48) > 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030705
+ID = 90030704
 removeTime = var(48)
 pauseMoveTime = var(48)
 superMoveTime = var(48)
@@ -2168,7 +2168,7 @@ ignoreHitPause = 1
 
 [State -1, Charge Right, Left, Right, Left: 2nd Right]
 type = Explod
-triggerAll = NumExplod(90030705)
+triggerAll = NumExplod(90030704)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -2184,7 +2184,7 @@ triggerAll = NumExplod(90030706)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90030704
+ID = 90030714
 removeTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3169,7 +3169,7 @@ triggerAll = NumExplod(90011006) || NumExplod(90011009)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
 anim = 1
-ID = 90031005
+ID = 90031008
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3177,7 +3177,7 @@ ignoreHitPause = 1
 
 [State -1, 720/L, D, R, U, L, D, R, U: Up-Left]
 type = Explod
-triggerAll = NumExplod(90031005)
+triggerAll = NumExplod(90031008)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
 anim = 1
@@ -3189,7 +3189,7 @@ ignoreHitPause = 1
 
 [State -1, 720/L, D, R, U, L, D, R, U: 2nd Left]
 type = Explod
-triggerAll = NumExplod(90031005) || NumExplod(90031007)
+triggerAll = NumExplod(90031008) || NumExplod(90031007)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -3265,7 +3265,7 @@ triggerAll = NumExplod(90031006) || NumExplod(90031009)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
 anim = 1
-ID = 90031008
+ID = 90031018
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3280,7 +3280,7 @@ triggerAll = NumExplod(90011106) || NumExplod(90011103)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
 anim = 1
-ID = 90031105
+ID = 90031102
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3288,7 +3288,7 @@ ignoreHitPause = 1
 
 [State -1, 720/L, U, R, D, L, U, R, D: Down-Left]
 type = Explod
-triggerAll = NumExplod(90031105)
+triggerAll = NumExplod(90031102)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
 anim = 1
@@ -3300,7 +3300,7 @@ ignoreHitPause = 1
 
 [State -1, 720/L, U, R, D, L, U, R, D: 2nd Left]
 type = Explod
-triggerAll = NumExplod(90031105) || NumExplod(90031101)
+triggerAll = NumExplod(90031102) || NumExplod(90031101)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -3376,7 +3376,7 @@ triggerAll = NumExplod(90031106) || NumExplod(90031103)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
 anim = 1
-ID = 90031102
+ID = 90031112
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3391,7 +3391,7 @@ triggerAll = NumExplod(90011208) || NumExplod(90011207)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031205
+ID = 90031204
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3399,7 +3399,7 @@ ignoreHitPause = 1
 
 [State -1, 720/L, D, R, U, L, D, R, U: Down-Left]
 type = Explod
-triggerAll = NumExplod(90031205)
+triggerAll = NumExplod(90031204)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
 anim = 1
@@ -3411,7 +3411,7 @@ ignoreHitPause = 1
 
 [State -1, 720/D, R, U, L, D, R, U, L: 2nd Down]
 type = Explod
-triggerAll = NumExplod(90031205) || NumExplod(90031201)
+triggerAll = NumExplod(90031204) || NumExplod(90031201)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
 anim = 1
@@ -3487,7 +3487,7 @@ triggerAll = NumExplod(90031208) || NumExplod(90031207)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031204
+ID = 90031214
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3502,7 +3502,7 @@ triggerAll = NumExplod(90011308) || NumExplod(90011309)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031305
+ID = 90031306
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3510,7 +3510,7 @@ ignoreHitPause = 1
 
 [State -1, 720/D, L, U, R, D, L, U, R: Down-Right]
 type = Explod
-triggerAll = NumExplod(90031305)
+triggerAll = NumExplod(90031306)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
 anim = 1
@@ -3522,7 +3522,7 @@ ignoreHitPause = 1
 
 [State -1, 720/D, L, U, R, D, L, U, R: 2nd Down]
 type = Explod
-triggerAll = NumExplod(90031305) || NumExplod(90031303)
+triggerAll = NumExplod(90031306) || NumExplod(90031303)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
 anim = 1
@@ -3598,7 +3598,7 @@ triggerAll = NumExplod(90031308) || NumExplod(90031309)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031306
+ID = 90031316
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3613,7 +3613,7 @@ triggerAll = NumExplod(90011404) || NumExplod(90011407)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
 anim = 1
-ID = 90031405
+ID = 90031408
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3621,7 +3621,7 @@ ignoreHitPause = 1
 
 [State -1, 720/R, D, L, U, R, D, L, U: Up-Right]
 type = Explod
-triggerAll = NumExplod(90031405)
+triggerAll = NumExplod(90031408)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
 anim = 1
@@ -3633,7 +3633,7 @@ ignoreHitPause = 1
 
 [State -1, 720/R, D, L, U, R, D, L, U: 2nd Right]
 type = Explod
-triggerAll = NumExplod(90031405) || NumExplod(90031409)
+triggerAll = NumExplod(90031408) || NumExplod(90031409)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -3709,7 +3709,7 @@ triggerAll = NumExplod(90031404) || NumExplod(90031407)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
 anim = 1
-ID = 90031408
+ID = 90031418
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3835,7 +3835,7 @@ triggerAll = NumExplod(90011602) || NumExplod(90011601)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031605
+ID = 90031604
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3843,7 +3843,7 @@ ignoreHitPause = 1
 
 [State -1, 720/U, R, D, L, U, R, D, L: Up-Left]
 type = Explod
-triggerAll = NumExplod(90031605)
+triggerAll = NumExplod(90031604)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
 anim = 1
@@ -3855,7 +3855,7 @@ ignoreHitPause = 1
 
 [State -1, 720/U, R, D, L, U, R, D, L: 2nd Up]
 type = Explod
-triggerAll = NumExplod(90031605) || NumExplod(90031607)
+triggerAll = NumExplod(90031604) || NumExplod(90031607)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
 anim = 1
@@ -3931,7 +3931,7 @@ triggerAll = NumExplod(90031602) || NumExplod(90031601)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031604
+ID = 90031614
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -3946,7 +3946,7 @@ triggerAll = NumExplod(90011702) || NumExplod(90011703)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031705
+ID = 90031706
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -3954,7 +3954,7 @@ ignoreHitPause = 1
 
 [State -1, 720/U, L, D, R, U, L, D, R: Up-Right]
 type = Explod
-triggerAll = NumExplod(90031705)
+triggerAll = NumExplod(90031706)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
 anim = 1
@@ -3966,7 +3966,7 @@ ignoreHitPause = 1
 
 [State -1, 720/U, L, D, R, U, L, D, R: 2nd Up]
 type = Explod
-triggerAll = NumExplod(90031705) || NumExplod(90031709)
+triggerAll = NumExplod(90031706) || NumExplod(90031709)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
 anim = 1
@@ -4042,7 +4042,7 @@ triggerAll = NumExplod(90031702) || NumExplod(90031703)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90031706
+ID = 90031716
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -4870,6 +4870,7 @@ ignoreHitPause = 1
 [State -1, AssertSpecial: NoAirGuard]
 type = AssertSpecial
 trigger1 = P2dist x < 0 && StateType = A
+trigger1 = !AILevel
 flag = NoAirGuard
 ignoreHitPause = 0
 
@@ -4888,6 +4889,7 @@ value = 120
 [State -1, AssertSpecial: No StandGuard and NoCrouchGuard]
 type = AssertSpecial
 trigger1 = P2dist x < 0 && StateType != A
+trigger1 = !AILevel
 flag = NoStandGuard
 flag2 = NoCrouchGuard
 ignoreHitPause = 0
