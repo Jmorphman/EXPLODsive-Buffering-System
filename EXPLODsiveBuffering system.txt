@@ -4425,7 +4425,7 @@ ignoreHitPause = 1
 ;==============================================================================================
 
 ;==============================================================================================
-;A super motion used mostly by SNK; uses the SNK half-circle rules.
+;A super motion used mostly by SNK; uses the modified SNK half-circle rules defined earlier.
 ;==============================================================================================
 
 ;=====================<RIGHT, LEFT, DOWN-LEFT, DOWN, DOWN-RIGHT, RIGHT>========================
