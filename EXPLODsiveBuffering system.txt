@@ -28,6 +28,7 @@
 ;Left:										90000004
 ;Down-left:									90000001
 
+
 ;BUTTON PRESS
 ;x:										90000200
 ;y:										90000210
@@ -37,6 +38,7 @@
 ;c:										90000250
 ;start:										90000195
 
+
 ;BUTTON RELEASE
 ;x:										90000205
 ;y:										90000215
@@ -44,8 +46,18 @@
 ;a:										90000235
 ;b:										90000245
 ;c:										90000255
+;start:										90000196
+
 
 ;SYSTEM MOTIONS
+;Down (3 ticks):				(D with a 3 tick buffer)	90000012
+;Down-right (3 ticks):				(DR with a 3 tick buffer)	90000013
+;Right (3 ticks):				(R with a 3 tick buffer)	90000016
+;Up-right (3 ticks):				(UR with a 3 tick buffer)	90000019
+;Up (3 ticks):					(U with a 3 tick buffer)	90000018
+;Up-left (3 ticks):				(UL with a 3 tick buffer)	90000017
+;Left (3 ticks):				(L with a 3 tick buffer)	90000014
+;Down-left (3 ticks):				(DL with a 3 tick buffer)	90000011
 ;R, R:						(F, F)				90001016
 ;L, L:						(B, B)				90001064
 ;D, U:						(D, U)				90000408
@@ -81,6 +93,7 @@
 ;D, DL, L, UL:					(QCB, UB)			90012507
 ;D, D:						([special] D, D)		90012602
 
+
 ;SUPER MOTIONS
 ;D, DR, R, D, DR, R:				(QCFx2)				90030016
 ;D, DL, L, D, DL, L:				(QCBx2)				90030114
@@ -105,7 +118,10 @@
 ;D, DR, R, DR, L:				(QCF, DF, B)			90032404
 ;D, DL, L, DL, R:				(QCB, DB, F)			90032506
 ;D, D, D:					(D, D, D)			90032602
-;x, x, F, a, z:					(Shun Goku Satsu)		90040220
+
+
+;SUPER MOTIONS (button inputs)
+;x, x, F, a, z:					(Shun Goku Satsu)		94000220
 
 
 
@@ -249,7 +265,16 @@ trigger1 = NumHelper(90000005) && !IsHelper
 trigger1 = Helper(90000005), command = "x"
 anim = 1
 ID = 90000200
-;we include " + ifElse(HitPauseTime, HitPauseTime - 1, 0)" to the RemoveTime/PauseMoveTime/SuperMoveTime
+;the removeTime, pauseMoveTime, and superMoveTime all must be the same value. This represents the
+;amount of time (in ticks) that this individual input is "active"; in other words, it's the window
+;of time the player has to input the next input in sequence (or if it's the final input of a command,
+;the amount of time that command will last, if the character cannot currently perform the move in
+;question). We use "10" as the default value for most directional inputs, because it's generally the
+;standard amount of time for most games
+;We use "3" for button inputs, which is what many modern games use, but there's a lot of variance
+;there.
+
+;We also include " + ifElse(HitPauseTime, HitPauseTime - 1, 0)" to the RemoveTime/PauseMoveTime/SuperMoveTime
 ;in order to keep the command alive during hit pause. This goes on all button press commands, as well as
 ;the final directional input of any system, special, or super command.
 ;For more information on what the removeTime (and pauseMoveTime, et. al.) represents, see the comments for
@@ -520,6 +545,129 @@ pauseMoveTime = 3
 superMoveTime = 3
 ignoreHitPause = 1
 
+
+
+;==============================================================================================
+;=============================<DIRECTIONAL INPUTS (3 TICK BUFFER)>=============================
+;==============================================================================================
+
+;==============================================================================================
+;These activate whenever the direction in question is input, and persist for three ticks. Useful
+;if you need to use only a single directional input, but also want it to last longer than one tick.
+;==============================================================================================
+
+;======================================<DOWN (3 TICKS)>========================================
+[State -1, Down (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "fwd"
+anim = 1
+ID = 90000012
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;===================================<DOWN-RIGHT (3 TICKS)>=====================================
+[State -1, Down-Right (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+anim = 1
+ID = 90000013
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;======================================<RIGHT (3 TICKS)>=======================================
+[State -1, Right (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000016
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;=====================================<UP-RIGHT (3 TICKS)>=====================================
+[State -1, Up-Right (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000019
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;========================================<UP (3 TICKS)>========================================
+[State -1, Up (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
+anim = 1
+ID = 90000018
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;=====================================<UP-LEFT (3 TICKS)>======================================
+[State -1, Up-Left (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000017
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;=======================================<LEFT 3 TICKS>=========================================
+[State -1, Left (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000014
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;====================================<DOWN-LEFT 3 TICKS>=======================================
+[State -1, Down-Left (3 ticks)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+anim = 1
+ID = 90000011
+removeTime = 3
+pauseMoveTime = 3
+superMoveTime = 3
+ignoreHitPause = 1
+
+
+
 ;==============================================================================================
 ;Reminder: because this system is based on absolute directions (left/right) instead of relative
 ;directions (forward/backward), all commands must have a mirrored command as well (unless they are
@@ -527,7 +675,6 @@ ignoreHitPause = 1
 ;command must be defined in this system: one assuming the character is facing the right, and one
 ;for the left.
 ;==============================================================================================
-
 
 ;==============================================================================================
 ;================================<FORWARD, FORWARD/BACK, BACK>=================================
@@ -556,14 +703,6 @@ triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90001006
-;the removeTime, pauseMoveTime, and superMoveTime all must be the same value. This represents the
-;amount of time (in ticks) that this individual input is "active"; in other words, it's the window
-;of time the player has to input the next input in sequence (or if it's the final input of a command,
-;the amount of time that command will last, if the character cannot currently perform the move in
-;question). We use "10" as the default value for most directional inputs, because it's generally the
-;standard amount of time for most games
-;We use "3" for button inputs, which is what many modern games use, but there's a lot of variance
-;there.
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -612,6 +751,19 @@ ID = 90001016
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+[State -1, R, R: 2nd Right (10 ticks)]
+type = Explod
+;this one is used for Kung Fu Knee
+triggerAll = NumExplod(90001005) && NumExplod(90001006)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90001026
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 ignoreHitPause = 1
 
 
@@ -663,6 +815,18 @@ ID = 90001064
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+[State -1, L, L: 2nd Left (10 ticks)]
+type = Explod
+triggerAll = NumExplod(90001055) && NumExplod(90001054)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90001074
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 ignoreHitPause = 1
 
 
@@ -1573,7 +1737,6 @@ ignoreHitPause = 1
 ;================================<RIGHT, DOWN, DOWN-RIGHT>=====================================
 [State -1, R, D, DR: Press Right]
 type = Explod
-triggerAll = NumExplod(90010003)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
@@ -4621,11 +4784,11 @@ ignoreHitPause = 1
 ;on separate ticks.
 [State -1, x, x, F, a, z: 2nd x]
 type = Explod
-triggerAll = NumExplod(90040200)
+triggerAll = NumExplod(94000200)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "x"
 anim = 1
-ID = 90040205
+ID = 94000201
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -4636,7 +4799,7 @@ type = Explod
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "x"
 anim = 1
-ID = 90040200
+ID = 94000200
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -4651,14 +4814,14 @@ ignoreHitPause = 1
 ;Remove the "StateType != A" in the triggers below to have it work like SFIII/most other games.
 [State -1, x, x, F, a, z: Forward]
 type = Explod
-triggerAll = NumExplod(90040205)
+triggerAll = NumExplod(94000201)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = ifElse(P2dist x < 0 && StateType != A, Facing = -1, Facing = 1)
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 trigger2 = ifElse(P2dist x < 0 && StateType != A, Facing = 1, Facing = -1)
 trigger2 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
-ID = 90040006
+ID = 94000006
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -4666,11 +4829,11 @@ ignoreHitPause = 1
 
 [State -1, x, x, F, a, z: a]
 type = Explod
-triggerAll = NumExplod(90040006)
+triggerAll = NumExplod(94000006)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "a"
 anim = 1
-ID = 90040230
+ID = 94000230
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
@@ -4678,11 +4841,11 @@ ignoreHitPause = 1
 
 [State -1, x, x, F, a, z: z]
 type = Explod
-triggerAll = NumExplod(90040230)
+triggerAll = NumExplod(94000230)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "z"
 anim = 1
-ID = 90040220
+ID = 94000220
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
