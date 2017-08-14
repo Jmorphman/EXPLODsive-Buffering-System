@@ -5688,6 +5688,10 @@ trigger2 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)
 trigger3 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000007)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000009))
 value = 120
 
+;These three ChangeStates are only in use when the character has landed from a jump after switching
+;sides, to get around a MUGEN bug where a character's directions don't switch until a tick has passed,
+;after they've landed from a jump and switched sides. Otherwise, MUGEN's default guard behavior works
+;well enough!
 [State -1, AssertSpecial: No StandGuard and NoCrouchGuard]
 type = AssertSpecial
 trigger1 = P2dist x < 0 && StateType != A
@@ -5696,10 +5700,6 @@ flag = NoStandGuard
 flag2 = NoCrouchGuard
 ignoreHitPause = 0
 
-;These two ChangeStates are only in use when the character has landed from a jump after switching
-;sides, to get around a MUGEN bug where a character's directions don't switch until a tick has passed,
-;after they've landed from a jump and switched sides. Otherwise, MUGEN's default guard behavior works
-;well enough!
 [State -1, Stand Blocking]
 type = ChangeState
 triggerAll = !AILevel
