@@ -5694,8 +5694,9 @@ value = 120
 ;well enough!
 [State -1, AssertSpecial: No StandGuard and NoCrouchGuard]
 type = AssertSpecial
+triggerAll = !AILevel
 trigger1 = P2dist x < 0 && StateType != A
-trigger1 = !AILevel
+trigger2 = NumExplod(94646464) || NumExplod(92468246)
 flag = NoStandGuard
 flag2 = NoCrouchGuard
 ignoreHitPause = 0
@@ -5704,7 +5705,7 @@ ignoreHitPause = 0
 type = ChangeState
 triggerAll = !AILevel
 triggerAll = InGuardDist
-triggerAll = P2dist x < 0 && StateType != A
+triggerAll = (P2dist x < 0 && StateType != A) || NumExplod(94646464) || NumExplod(92468246)
 triggerAll = StateType = S
 triggerAll = ctrl
 trigger1 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000004)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000006))
@@ -5714,7 +5715,7 @@ value = 120
 type = ChangeState
 triggerAll = !AILevel
 triggerAll = InGuardDist
-triggerAll = P2dist x < 0 && StateType != A
+triggerAll = (P2dist x < 0 && StateType != A) || NumExplod(94646464) || NumExplod(92468246)
 triggerAll = StateType = C
 triggerAll = ctrl
 trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
