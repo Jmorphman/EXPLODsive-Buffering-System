@@ -5718,10 +5718,7 @@ triggerAll = InGuardDist
 triggerAll = (P2dist x < 0 && StateType != A) || NumExplod(94646464) || NumExplod(92468246)
 triggerAll = StateType = C
 triggerAll = ctrl
-trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
 trigger1 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000003))
-trigger2 = NumExplod(92828282) || NumExplod(92468246)
-trigger2 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000007)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000009))
 value = 120
 
 
