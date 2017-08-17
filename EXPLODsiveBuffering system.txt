@@ -5264,7 +5264,7 @@ ignoreHitPause = 1
 
 
 ;==================<LEFT, RIGHT, DOWN-RIGHT, DOWN, DOWN-LEFT, LEFT>======================
-[State -1, L, DL, D, DR, R, L: Press 1st Left]
+[State -1, L, R, DR, D, DL, L: Press 1st Left]
 type = Explod
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
@@ -5275,7 +5275,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, DL, D, DR, R, L: 1st Left]
+[State -1, L, R, DR, D, DL, L: 1st Left]
 type = Explod
 triggerAll = NumExplod(90000004)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
@@ -5289,7 +5289,7 @@ pauseMoveTime = 5
 superMoveTime = 5
 ignoreHitPause = 1
 
-[State -1, L, DL, D, DR, R, L: Right]
+[State -1, L, R, DR, D, DL, L: Right]
 type = Explod
 triggerAll = NumExplod(90032104) || NumExplod(90032154)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
@@ -5301,7 +5301,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, DL, D, DR, R, L: Down-Right]
+[State -1, L, R, DR, D, DL, L: Down-Right]
 type = Explod
 triggerAll = NumExplod(90032106)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
@@ -5316,7 +5316,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, DL, D, DR, R, L: Down]
+[State -1, L, R, DR, D, DL, L: Down]
 type = Explod
 triggerAll = NumExplod(90032103) || NumExplod(90032106)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
@@ -5331,7 +5331,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, DL, D, DR, R, L: Down-Left]
+[State -1, L, R, DR, D, DL, L: Down-Left]
 type = Explod
 triggerAll = NumExplod(90032102)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
@@ -5346,7 +5346,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, L, DL, D, DR, R, L: 2nd Left]
+[State -1, L, R, DR, D, DL, L: 2nd Left]
 type = Explod
 triggerAll = NumExplod(90032101) || NumExplod(90032102)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
