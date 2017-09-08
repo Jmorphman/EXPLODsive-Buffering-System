@@ -58,6 +58,16 @@
 ;Up-left (3 ticks):				(UL with a 3 tick buffer)	90000017
 ;Left (3 ticks):				(L with a 3 tick buffer)	90000014
 ;Down-left (3 ticks):				(DL with a 3 tick buffer)	90000011
+
+;Down (3 ticks + HitPause):			(D [command moves/crouching)	90000212
+;Down-right (3 ticks + HitPause):		(DR [command moves/crouching)	90000213
+;Right (3 ticks + HitPause):			(R [command moves/crouching)	90000216
+;Up-right (3 ticks + HitPause):			(UR [command moves/crouching)	90000219
+;Up (3 ticks + HitPause):			(U [command moves/crouching)	90000218
+;Up-left (3 ticks + HitPause):			(UL [command moves/crouching)	90000217
+;Left (3 ticks + HitPause):			(L [command moves/crouching)	90000214
+;Down-left (3 ticks + HitPause):		(DL [command moves/crouching)	90000211
+
 ;R, R:						(F, F)				90001016
 ;L, L:						(B, B)				90001064
 ;D, U:						(D, U)				90000408
@@ -716,6 +726,148 @@ ID = 90000011
 removeTime = 3
 pauseMoveTime = 3
 superMoveTime = 3
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;=====================<DIRECTIONAL INPUTS (3 TICK BUFFER + HITPAUSE TIME)>=====================
+;==============================================================================================
+
+;==============================================================================================
+;These are almost identical to the explods directly above this, except these will persist through
+;a HitPause. Useful if you want to have chain combos, since using these will allow the player to input
+;directional commands during a hitpause (for instance, they might want to chain standing LP into
+;crouching LP by pressing down + LP during the HitPause of the standing LP), as these explods will
+;not be removed until 3 ticks after the HitPause ends.
+;==============================================================================================
+
+;==============================<DOWN (3 TICKS + HITPAUSE TIME)>================================
+[State -1, Down (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "down" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "fwd"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "up" && Helper(90000005), command != "back" && Helper(90000005), command != "down" && Helper(90000005), command != "fwd"
+anim = 1
+ID = 90000212
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;===========================<DOWN-RIGHT (3 TICKS + HITPAUSE TIME)>=============================
+[State -1, Down-Right (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000213
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================<RIGHT (3 TICKS + HITPAUSE TIME)>===============================
+[State -1, Right (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000216
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=============================<UP-RIGHT (3 TICKS + HITPAUSE TIME)>=============================
+[State -1, Up-Right (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+anim = 1
+ID = 90000219
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;================================<UP (3 TICKS + HITPAUSE TIME)>================================
+[State -1, Up (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "back"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back"
+anim = 1
+ID = 90000218
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=============================<UP-LEFT (3 TICKS + HITPAUSE TIME)>==============================
+[State -1, Up-Left (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+anim = 1
+ID = 90000217
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;===============================<LEFT 3 TICKS + HITPAUSE TIME>=================================
+[State -1, Left (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000214
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;============================<DOWN-LEFT 3 TICKS + HITPAUSE TIME>===============================
+[State -1, Down-Left (3 ticks + HitPauseTime)]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+anim = 1
+ID = 90000211
+removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 ignoreHitPause = 1
 
 
