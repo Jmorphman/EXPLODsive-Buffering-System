@@ -59,14 +59,14 @@
 ;Left (3 ticks):				(L with a 3 tick buffer)	90000014
 ;Down-left (3 ticks):				(DL with a 3 tick buffer)	90000011
 
-;Down (3 ticks + HitPause):			(D [command moves/crouching)	90000212
-;Down-right (3 ticks + HitPause):		(DR [command moves/crouching)	90000213
-;Right (3 ticks + HitPause):			(R [command moves/crouching)	90000216
-;Up-right (3 ticks + HitPause):			(UR [command moves/crouching)	90000219
-;Up (3 ticks + HitPause):			(U [command moves/crouching)	90000218
-;Up-left (3 ticks + HitPause):			(UL [command moves/crouching)	90000217
-;Left (3 ticks + HitPause):			(L [command moves/crouching)	90000214
-;Down-left (3 ticks + HitPause):		(DL [command moves/crouching)	90000211
+;Down (3 ticks + HitPause):			(D w/ 3 tick buffer + HitPause)	90000212
+;Down-right (3 ticks + HitPause):		(DR w/ 3 tick buffer + HitPause)90000213
+;Right (3 ticks + HitPause):			(R w/ 3 tick buffer + HitPause)	90000216
+;Up-right (3 ticks + HitPause):			(UR w/ 3 tick buffer + HitPause)90000219
+;Up (3 ticks + HitPause):			(U w/ 3 tick buffer + HitPause)	90000218
+;Up-left (3 ticks + HitPause):			(UL w/ 3 tick buffer + HitPause)90000217
+;Left (3 ticks + HitPause):			(L w/ 3 tick buffer + HitPause)	90000214
+;Down-left (3 ticks + HitPause):		(DL w/ 3 tick buffer + HitPause)90000211
 
 ;R, R:						(F, F)				90001016
 ;L, L:						(B, B)				90001064
@@ -305,7 +305,7 @@ ignoreHitPause = 1
 type = Explod
 ;if there already exists a "press x" explod, and the player is in HitPauseTime, then we don't need another!
 trigger1 = !HitPauseTime || !NumExplod(90000200)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "x"
 anim = 1
 ID = 90000200
@@ -331,7 +331,7 @@ ignoreHitPause = 1
 [State -1, Press y]
 type = Explod
 trigger1 = !HitPauseTime || !NumExplod(90000210)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "y"
 anim = 1
 ID = 90000210
@@ -343,7 +343,7 @@ ignoreHitPause = 1
 [State -1, Press z]
 type = Explod
 trigger1 = !HitPauseTime || !NumExplod(90000220)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "z"
 anim = 1
 ID = 90000220
@@ -355,7 +355,7 @@ ignoreHitPause = 1
 [State -1, Press a]
 type = Explod
 trigger1 = !HitPauseTime || !NumExplod(90000230)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "a"
 anim = 1
 ID = 90000230
@@ -367,7 +367,7 @@ ignoreHitPause = 1
 [State -1, Press b]
 type = Explod
 trigger1 = !HitPauseTime || !NumExplod(90000240)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "b"
 anim = 1
 ID = 90000240
@@ -379,7 +379,7 @@ ignoreHitPause = 1
 [State -1, Press c]
 type = Explod
 trigger1 = !HitPauseTime || !NumExplod(90000250)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "c"
 anim = 1
 ID = 90000250
@@ -391,7 +391,7 @@ ignoreHitPause = 1
 [State -1, Press start]
 type = Explod
 trigger1 = !HitPauseTime || !NumExplod(90000195)
-trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "start"
 anim = 1
 ID = 90000195
