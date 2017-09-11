@@ -2018,7 +2018,7 @@ ignoreHitPause = 1
 
 
 ;=============================<DOWN, DOWN-LEFT, LEFT, UP-LEFT>=================================
-[State -1, D, DL, L, DL, R: Left]
+[State -1, D, DL, L, UL: Left]
 type = Explod
 triggerAll = NumExplod(90010101)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
@@ -2030,7 +2030,7 @@ pauseMoveTime = 10
 superMoveTime = 10
 ignoreHitPause = 1
 
-[State -1, D, DL, L, DL, R: Up-Left]
+[State -1, D, DL, L, UL: Up-Left]
 type = Explod
 triggerAll = NumExplod(90012504)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
