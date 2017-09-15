@@ -736,10 +736,9 @@ ignoreHitPause = 1
 
 ;==============================================================================================
 ;These are almost identical to the explods directly above this, except these will persist through
-;a HitPause. Useful if you want to have chain combos, since using these will allow the player to input
-;directional commands during a hitpause (for instance, they might want to chain standing LP into
-;crouching LP by pressing down + LP during the HitPause of the standing LP), as these explods will
-;not be removed until 3 ticks after the HitPause ends.
+;a HitPause, and will only activate if the direction in question is being either held or input on
+;the same tick that any button is input. These can be used to replicate the command behavior of Capcom
+;games for crouching and command normal moves. For more information, please see [INSERT LINK].
 ;==============================================================================================
 
 ;==============================<DOWN (3 TICKS + HITPAUSE TIME)>================================
