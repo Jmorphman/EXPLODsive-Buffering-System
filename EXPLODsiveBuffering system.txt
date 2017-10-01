@@ -5559,20 +5559,25 @@ superMoveTime = 10
 ignoreHitPause = 1
 
 
-;This forward input is a little bit tricky and weird. We have it patterned after SFA3 and other CPS2 games
-;here, where it behaves a little differently compared to how most games (including SFA3 itself) operate
+;This forward input is a little bit tricky and weird. We have it patterned after SFA and other CPS2 games
+;here, where it behaves a little differently compared to how most games (including SFA itself) operate
 ;for moves done in or inputted while in the air (see http://mugenguild.com/forum/msg.2366955 for a discussion
 ;about how most games operate). In CPS2 games, if you jump over an opponent while inputting this command,
 ;"forward" won't have flipped directions until you land. This is in contrast to how the move behaves in SFIII
 ;and elsewhere. Remove the "StateType != A" in the triggers below to have it work like SFIII/most other games.
+
+;An additional item of interest here is that directional inputs in (most) games's command supers accept diagonals
+;in place of cardinal directional inputs; i.e., "LP, LP, DF, LK, HP" would still activate an SGS in SFA2. Weirdly
+;enough, though diagonals are allowed in SFA2, SFIII, and the Darkstalkers series, SFA3 only allows a cardinal input!
+;SNK games also only allow cardinal inputs. We however have opted to follow Capcom's (usual) method and allow diagonals.
 [State -1, x, x, F, a, z: Forward]
 type = Explod
 triggerAll = NumExplod(94000201)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = ifElse(P2dist x < 0 && StateType != A, Facing = -1, Facing = 1)
-trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+trigger1 = (Helper(90000005), command = "fwd" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "ufwd") && Helper(90000005), command != "back"
 trigger2 = ifElse(P2dist x < 0 && StateType != A, Facing = 1, Facing = -1)
-trigger2 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+trigger2 = (Helper(90000005), command = "back" || Helper(90000005), command = "dback" || Helper(90000005), command = "uback") && Helper(90000005), command != "fwd"
 anim = 1
 ID = 94000006
 removeTime = 10
