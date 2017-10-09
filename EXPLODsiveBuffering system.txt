@@ -59,14 +59,14 @@
 ;Left (3 ticks):				(L with a 3 tick buffer)	90000014
 ;Down-left (3 ticks):				(DL with a 3 tick buffer)	90000011
 
-;Down (3 ticks + HitPause):			(D w/ 3 tick buffer + HitPause)	90000212
-;Down-right (3 ticks + HitPause):		(DR w/ 3 tick buffer + HitPause)90000213
-;Right (3 ticks + HitPause):			(R w/ 3 tick buffer + HitPause)	90000216
-;Up-right (3 ticks + HitPause):			(UR w/ 3 tick buffer + HitPause)90000219
-;Up (3 ticks + HitPause):			(U w/ 3 tick buffer + HitPause)	90000218
-;Up-left (3 ticks + HitPause):			(UL w/ 3 tick buffer + HitPause)90000217
-;Left (3 ticks + HitPause):			(L w/ 3 tick buffer + HitPause)	90000214
-;Down-left (3 ticks + HitPause):		(DL w/ 3 tick buffer + HitPause)90000211
+;Down (3 ticks + HitPause):			(D w/ 3 tick buffer + HitPause)	90000022
+;Down-right (3 ticks + HitPause):		(DR w/ 3 tick buffer + HitPause)90000023
+;Right (3 ticks + HitPause):			(R w/ 3 tick buffer + HitPause)	90000026
+;Up-right (3 ticks + HitPause):			(UR w/ 3 tick buffer + HitPause)90000029
+;Up (3 ticks + HitPause):			(U w/ 3 tick buffer + HitPause)	90000028
+;Up-left (3 ticks + HitPause):			(UL w/ 3 tick buffer + HitPause)90000027
+;Left (3 ticks + HitPause):			(L w/ 3 tick buffer + HitPause)	90000024
+;Down-left (3 ticks + HitPause):		(DL w/ 3 tick buffer + HitPause)90000021
 
 ;R, R:						(F, F)				90001016
 ;L, L:						(B, B)				90001064
@@ -751,7 +751,7 @@ trigger1 = (Helper(90000005), command = "down" || Helper(90000005), command = "h
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "up" || Helper(90000005), command = "holdup") && Helper(90000005), command != "back" && Helper(90000005), command != "down" && Helper(90000005), command != "fwd" && Helper(90000005), command != "holdback" && Helper(90000005), command != "holddown" && Helper(90000005), command != "holdfwd"
 anim = 1
-ID = 90000212
+ID = 90000022
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -770,7 +770,7 @@ trigger1 = (Helper(90000005), command = "dfwd" || (Helper(90000005), command = "
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "ufwd" || (Helper(90000005), command = "holdup" && Helper(90000005), command = "holdfwd")) && Helper(90000005), command != "back" && Helper(90000005), command != "down" && Helper(90000005), command != "holdback" && Helper(90000005), command != "holddown"
 anim = 1
-ID = 90000213
+ID = 90000023
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -785,7 +785,7 @@ triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 triggerAll = Helper(90000005), command = "x" || Helper(90000005), command = "y" || Helper(90000005), command = "z" || Helper(90000005), command = "a"  || Helper(90000005), command = "b" || Helper(90000005), command = "c" || Helper(90000005), command = "start"
 trigger1 = (Helper(90000005), command = "fwd" || Helper(90000005), command = "holdfwd") && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down" && Helper(90000005), command != "holdback" && Helper(90000005), command != "holdup" && Helper(90000005), command != "holddown"
 anim = 1
-ID = 90000216
+ID = 90000026
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -803,7 +803,7 @@ trigger1 = (Helper(90000005), command = "ufwd" || (Helper(90000005), command = "
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "dfwd" || (Helper(90000005), command = "holddown" && Helper(90000005), command = "holdfwd")) && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "holdback" && Helper(90000005), command != "holdup"
 anim = 1
-ID = 90000219
+ID = 90000029
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -821,7 +821,7 @@ trigger1 = (Helper(90000005), command = "up" || Helper(90000005), command = "hol
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "down" || Helper(90000005), command = "holddown") && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "back" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "holdup" && Helper(90000005), command != "holdback"
 anim = 1
-ID = 90000218
+ID = 90000028
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -839,7 +839,7 @@ trigger1 = (Helper(90000005), command = "uback" || (Helper(90000005), command = 
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "dback" || (Helper(90000005), command = "holddown" && Helper(90000005), command = "holdback")) && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "holdup"
 anim = 1
-ID = 90000217
+ID = 90000027
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -854,7 +854,7 @@ triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 triggerAll = Helper(90000005), command = "x" || Helper(90000005), command = "y" || Helper(90000005), command = "z" || Helper(90000005), command = "a"  || Helper(90000005), command = "b" || Helper(90000005), command = "c" || Helper(90000005), command = "start"
 trigger1 = (Helper(90000005), command = "back" || Helper(90000005), command = "holdback") && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "holdup" && Helper(90000005), command != "holddown"
 anim = 1
-ID = 90000214
+ID = 90000024
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
@@ -872,7 +872,7 @@ trigger1 = (Helper(90000005), command = "dback" || (Helper(90000005), command = 
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "uback" || (Helper(90000005), command = "holdup" && Helper(90000005), command = "holdback")) && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "holddown"
 anim = 1
-ID = 90000211
+ID = 900000021
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
