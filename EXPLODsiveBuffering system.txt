@@ -2559,33 +2559,36 @@ ignoreHitPause = 1
 
 ;==============================================================================================
 ;this is the standard method of coding charge moves in MUGEN (since MUGEN's in-built charge commands
-;are completely broken), with the only change being that the triggers are adjusted to ensure
-;that the correct behavior occurs when switching sides.
+;are completely broken), with two changes: the triggers are adjusted to ensure
+;that the correct behavior occurs when switching sides, and the variable keeping track of how long
+;the character is holding a particular direction increases when left is held, but decreases when right
+;is held.
 
-;When a right-facing character holds left, or a left-facing character holds right, var(47) will
-;increase by one every tick. If at any point the character stops holding that respective direction,
-;var(47) will be reset to 0. And if var(47) has a value greater than or equal to 45 (meaning left
-;or right has been held for 45 or more ticks), then var(48) is set to 48. This is our charge buffer,
-;and as long as it's non-zero, the character is able to perform a charge move. var(48) will slowly
-;start counting down to 0, however, if the player stops hold left or right!
+;When a right-facing character holds left, var(47) will increase by one every tick. When a left-facing
+;character holds right, var(47) will decrease by one every tick. If at any point the character stops
+;holding that respective direction, var(47) will be reset to 0. And if var(47) has an absolute value
+;greater than or equal to 45 (meaning left or right has been held for 45 or more ticks), then var(48)
+;is set to 16. This is our charge buffer, and as long as it's non-zero, the character is able to perform
+;a charge move. var(48) will slowly start counting down to 0, however, if the player stops hold left or right!
 ;==============================================================================================
-[State -1, Back Charge Increment]
+[State -1, Left Charge Increment]
 type = VarAdd
-triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+triggerAll = NumHelper(90000005) && !IsHelper
 trigger1 = !AILevel
 trigger1 = ifElse(P2dist x < 0 && StateType = A, Facing = -1, Facing = 1) && Helper(90000005), command = "holdback"
-trigger2 = !AILevel
-trigger2 = ifElse(P2dist x < 0 && StateType = A, Facing = 1, Facing = -1) && Helper(90000005), command = "holdfwd"
-trigger3 = AILevel
+trigger2 = AILevel
 var(47) = 1
 
-[State -1, Back Charge Reset]
+;this will only activate if var(47) is greater than zero; this is to avoid this VarSet from activating
+;when the player is charging right
+[State -1, Left Charge Reset]
 type = VarSet
-triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+triggerAll = var(47) > 0
+triggerAll = NumHelper(90000005) && !IsHelper
 trigger1 = !AILevel
-trigger1 = ifElse(P2dist x < 0 && StateType = A, Facing = -1, Facing = 1) && Helper(90000005), command != "holdback"
+trigger1 = ifElse(P2dist x < 0 && StateType = A, Facing = -1, Facing = 1) && (Helper(90000005), command != "holdback" || Helper(90000005), command = "holdfwd")
 trigger2 = !AILevel
-trigger2 = ifElse(P2dist x < 0 && StateType = A, Facing = 1, Facing = -1) && Helper(90000005), command != "holdfwd"
+trigger2 = P2dist x < 0 || (Facing = -1 && StateType != A)
 trigger3 = AILevel
 trigger3 = StateNo = 0 || (StateNo = 20 && vel x > 0) || (StateNo = [760,762])
 trigger4 = AILevel
@@ -2594,22 +2597,53 @@ trigger5 = AILevel
 trigger5 = (StateNo = [1000, 4999]) && Time = 1
 var(47) = 0
 
-[State -1, Back Charge Buffer Activation]
-type = VarSet
-trigger1 = var(47) >= 45
-var(48) = 16
-
-[State -1, Back Charge Buffer Decrement]
+[State -1, Right Charge Increment]
 type = VarAdd
-trigger1 = var(47) < 45 && var(48) > 0
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = ifElse(P2dist x < 0 && StateType = A, Facing = 1, Facing = -1) && Helper(90000005), command = "holdfwd"
+trigger2 = AILevel
+var(47) = -1
+
+[State -1, Right Charge Reset]
+type = VarSet
+triggerAll = var(47) < 0
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = ifElse(P2dist x < 0 && StateType = A, Facing = 1, Facing = -1) && (Helper(90000005), command != "holdfwd" || Helper(90000005), command = "holdback")
+trigger2 = !AILevel
+trigger2 = P2dist x < 0 || (Facing = 1 && StateType != A)
+trigger3 = AILevel
+trigger3 = StateNo = 0 || (StateNo = 20 && vel x > 0) || (StateNo = [760,762])
+trigger4 = AILevel
+trigger4 = (StateNo = 40 && sysvar(1) != -1)
+trigger5 = AILevel
+trigger5 = (StateNo = [1000, 4999]) && Time = 1
+var(47) = 0
+
+[State -1, Left/Right Charge Buffer Activation]
+type = VarSet
+;we need to remember to check the absolute value of var(47), since it can be
+;either positive or negative!
+trigger1 = abs(var(47)) >= 45
+var(48) = ifElse(var(47) < 0, -16, 16)
+
+[State -1, Left Charge Buffer Decrement]
+type = VarAdd
+trigger1 = abs(var(47)) < 45 && var(48) > 0
 var(48) = -1
+
+[State -1, Right Charge Buffer Decrement]
+type = VarAdd
+trigger1 = abs(var(47)) < 45 && var(48) < 0
+var(48) = 1
 
 
 
 ;==============================================================================================
 ;With Capcom-style charge moves, the length of time the command is active behaves very differently;
-;than with standard commands, instead of having the RemoveTime be a constant value, we use the current
-;value of the charge buffer, var(48).
+;than with standard commands, instead of having the RemoveTime be a constant value, we use the
+;current value of the charge buffer, var(48).
 ;==============================================================================================
 
 ;=====================================<CHARGE LEFT, RIGHT>=====================================
@@ -2632,14 +2666,14 @@ ignoreHitPause = 1
 ;=====================================<CHARGE RIGHT, LEFT>=====================================
 [State -1, Charge Right, Left: Left]
 type = Explod
-triggerAll = var(48) > 0
+triggerAll = var(48) < 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90010704
-removeTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
-pauseMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
-superMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+removeTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 ignoreHitPause = 1
 
 
@@ -2696,14 +2730,14 @@ ignoreHitPause = 1
 ;==============================<CHARGE RIGHT, LEFT, RIGHT, LEFT>===============================
 [State -1, Charge Right, Left, Right, Left: 1st Left]
 type = Explod
-triggerAll = var(48) > 0
+triggerAll = var(48) < 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90030704
-removeTime = var(48)
-pauseMoveTime = var(48)
-superMoveTime = var(48)
+removeTime = abs(var(48))
+pauseMoveTime = abs(var(48))
+superMoveTime = abs(var(48))
 ignoreHitPause = 1
 
 [State -1, Charge Right, Left, Right, Left: 2nd Right]
@@ -2713,9 +2747,9 @@ triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90030706
-removeTime = var(48)
-pauseMoveTime = var(48)
-superMoveTime = var(48)
+removeTime = abs(var(48))
+pauseMoveTime = abs(var(48))
+superMoveTime = abs(var(48))
 ignoreHitPause = 1
 
 [State -1, Charge Right, Left, Right, Left: 2nd Left]
@@ -2725,9 +2759,9 @@ triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
 anim = 1
 ID = 90030714
-removeTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
-pauseMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
-superMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+removeTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 ignoreHitPause = 1
 
 
@@ -2760,10 +2794,10 @@ type = VarSet
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = !AILevel
 trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
-trigger1 = Helper(90000005), command != "holddown"
+trigger1 = Helper(90000005), command != "holddown" || Helper(90000005), command = "holdup"
 trigger2 = !AILevel
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
-trigger2 = Helper(90000005), command != "holdup"
+trigger2 = Helper(90000005), command != "holdup" || Helper(90000005), command = "holddown"
 trigger3 = AILevel
 trigger3 = StateNo = 0 || StateNo = 20 || (StateNo = 40 && Time = 1) || StateNo = 760
 trigger4 = AILevel
@@ -2860,7 +2894,7 @@ ignoreHitPause = 1
 ;=====================<CHARGE DOWN-RIGHT, DOWN-LEFT, DOWN-RIGHT, UP-LEFT>======================
 [State -1, Charge Down-Right, Down-Left, Down-Right, Up-Left: Down-Left]
 type = Explod
-triggerAll = var(48) > 0 && var(50) > 0
+triggerAll = var(48) < 0 && var(50) > 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
 trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
@@ -2896,7 +2930,7 @@ trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
 trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
-anim = 1
+anim = 1005
 ID = 90030907
 removeTime = var(50) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = var(50) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
