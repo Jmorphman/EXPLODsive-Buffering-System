@@ -5848,6 +5848,7 @@ triggerAll = InGuardDist
 triggerAll = StateType = A
 triggerAll = ctrl
 triggerAll = !(StateNo = [120,155])
+triggerAll = !NumExplod(90000004) && !NumExplod(90000006) && !NumExplod(90000001) && !NumExplod(90000003) && !NumExplod(90000007) && !NumExplod(90000009)
 trigger1 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000004)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000006))
 trigger2 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000003))
 trigger3 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000007)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000009))
@@ -5862,6 +5863,7 @@ type = AssertSpecial
 triggerAll = !AILevel
 trigger1 = P2dist x < 0 && StateType != A
 trigger2 = NumExplod(94646464) || NumExplod(92468246)
+trigger3 = !NumExplod(90000004) && !NumExplod(90000006) && !NumExplod(90000001) && !NumExplod(90000003) && !NumExplod(90000007) && !NumExplod(90000009)
 flag = NoStandGuard
 flag2 = NoCrouchGuard
 ignoreHitPause = 0
