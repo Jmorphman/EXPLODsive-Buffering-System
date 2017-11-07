@@ -2552,6 +2552,17 @@ ignoreHitPause = 1
 ;The charge moves below are patterned after Capcom's style of charge moves; for the SNK style, please
 ;see http://mugenguild.com/forum/msg.2366956, where code that replicates SNK behavior is provided, as
 ;well as further discussion about the nuances of Capcom and SNK's style of charge moves.
+
+;A note about AI: we have opted to only have the charge variables trigger for human controlled players,
+;but if you want the character to simulate charging up charge moves when played by an AI, the best way of
+;doing so would be to have the AI also utilize these variables. A commonly-used example of how one might
+;implement this would be to have the AI always increment the Left/Right (and Down, if used) charge variables
+;[var(47) and var(49), respectively], and then to have various triggers in the Left/Right (and Down) Charge
+;Reset sctrls that reset the charge variable to 0. For example, if the character were to walk forward, or go
+;to idle, it would look weird if they then performed a charge move, so those would be good triggers to have for
+;the reset sctrls. You should also reset the charge variables when the AI-controlled character activates a
+;special or super move, so they won't be able to fire off another charge move immediately after performing
+;their current move!
 ;==============================================================================================
 
 ;===============================<(CAPCOM) CHARGE BACK, FORWARD>================================
@@ -2570,16 +2581,6 @@ ignoreHitPause = 1
 ;greater than or equal to 45 (meaning left or right has been held for 45 or more ticks), then var(48)
 ;is set to 16. This is our charge buffer, and as long as it's non-zero, the character is able to perform
 ;a charge move. var(48) will slowly start counting down to 0, however, if the player stops hold left or right!
-
-;A note about AI: we have opted to only have the charge variables trigger for human controlled players, but if
-;you want the character to simulate charging up charge moves when played by an AI, the best way of doing so would
-;be to have the AI also utilize these variables. A commonly-used example of how one might implement this would be to
-;have the AI always increment the Left/Right (and Down, if used) charge variables [var(47) and var(49), respectively],
-;and then to have various triggers in the Left/Right (and Down) Charge Reset sctrls that reset the charge variable to 0.
-;For example, if the character were to walk forward, or go to idle, it would look weird if they then performed a charge
-;move, so those would be good triggers to have for the reset sctrls. You should also reset the charge variables when the
-;AI-controlled character activates a special or super move, so they won't be able to fire off another charge move immediately
-;after performing their current move!
 ;==============================================================================================
 [State -1, Left Charge Increment]
 type = VarAdd
