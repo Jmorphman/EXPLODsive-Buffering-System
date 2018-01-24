@@ -95,6 +95,8 @@
 ;R, U, L, D:					(360)				90011502
 ;U, R, D, L:					(360)				90011604
 ;U, L, D, R:					(360)				90011706
+;U, UR, R:					(UP-QCF)				90011806
+;U, UL, L:					(UP-QCB)				90011904
 ;R, D, L, R:					(HCB, F)			90012016
 ;L, D, R, L:					(HCF, B)			90012114
 ;R, L, R:					(F, B, F)			90012216
@@ -3891,7 +3893,137 @@ pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 ignoreHitPause = 1
 
+;================================<UP, UP-RIGHT, RIGHT>=====================================
 
+;Since this is the press directional input for the first input, it has a RemoveTime of 10
+[State -1, U, UR, R: Press Up]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "back" && Helper(90000005), command != "down" && Helper(90000005), command != "fwd"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "down" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "fwd"
+anim = 1
+ID = 90011808
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+;And since this is the release directional input for the first input, it has a RemoveTime of only 5!
+[State -1, U, UR, R: Release Up]
+type = Explod
+triggerAll = NumExplod(90000002)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command != "up" && Helper(90000005), command != "holdup"
+trigger2 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger2 = Helper(90000005), command = "up" || Helper(90000005), command = "holdup"
+trigger2 = Helper(90000005), command = "fwd" || Helper(90000005), command = "holdfwd" || Helper(90000005), command = "back" || Helper(90000005), command = "holdback" || Helper(90000005), command = "down" || Helper(90000005), command = "holddown"
+trigger3 = NumExplod(92828282) || NumExplod(92468246)
+trigger3 = Helper(90000005), command != "down" && Helper(90000005), command != "holddown"
+trigger4 = NumExplod(92828282) || NumExplod(92468246)
+trigger4 = Helper(90000005), command = "down" || Helper(90000005), command = "holddown"
+trigger4 = Helper(90000005), command = "fwd" || Helper(90000005), command = "holdfwd" || Helper(90000005), command = "back" || Helper(90000005), command = "holdback" || Helper(90000005), command = "up" || Helper(90000005), command = "holdup"
+anim = 1
+ID = 90011852
+removeTime = 5
+pauseMoveTime = 5
+superMoveTime = 5
+ignoreHitPause = 1
+
+[State -1, U, UR, R: Up-Right]
+type = Explod
+;Remember, we have to check to see if either the "press down" or "release down" explods exist!
+triggerAll = NumExplod(90011808) || NumExplod(90011852)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+anim = 1
+ID = 90011809
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, U, UR, R: Right]
+type = Explod
+triggerAll = NumExplod(90011809)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 6
+ID = 90011806
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=================================<UP, UP-LEFT, LEFT>======================================
+[State -1, U, UL, L: Press Up]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "back" && Helper(90000005), command != "down" && Helper(90000005), command != "fwd"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "down" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "fwd"
+anim = 1
+ID = 90011908
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, U, UL, L: Release Up]
+type = Explod
+triggerAll = NumExplod(90000002)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command != "up" && Helper(90000005), command != "holdup"
+trigger2 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger2 = Helper(90000005), command = "up" || Helper(90000005), command = "holdup"
+trigger2 = Helper(90000005), command = "fwd" || Helper(90000005), command = "holdfwd" || Helper(90000005), command = "back" || Helper(90000005), command = "holdback" || Helper(90000005), command = "down" || Helper(90000005), command = "holddown"
+trigger3 = NumExplod(92828282) || NumExplod(92468246)
+trigger3 = Helper(90000005), command != "down" && Helper(90000005), command != "holddown"
+trigger4 = NumExplod(92828282) || NumExplod(92468246)
+trigger4 = Helper(90000005), command = "down" || Helper(90000005), command = "holddown"
+trigger4 = Helper(90000005), command = "fwd" || Helper(90000005), command = "holdfwd" || Helper(90000005), command = "back" || Helper(90000005), command = "holdback" || Helper(90000005), command = "up" || Helper(90000005), command = "holdup"
+anim = 1
+ID = 90011952
+removeTime = 5
+pauseMoveTime = 5
+superMoveTime = 5
+ignoreHitPause = 1
+
+[State -1, U, UL, L: Up-Left]
+type = Explod
+triggerAll = NumExplod(90011908) || NumExplod(90011952)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+anim = 1
+ID = 90011907
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, U, UL, L: Left]
+type = Explod
+triggerAll = NumExplod(90011907)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "up"
+anim = 6
+ID = 90011904
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
 
 ;==============================================================================================
 ;===========================================<720>==============================================
