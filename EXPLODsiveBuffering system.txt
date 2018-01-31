@@ -591,7 +591,17 @@ pauseMoveTime = 3
 superMoveTime = 3
 ignoreHitPause = 1
 
-
+[State -1, Throw Tech]
+type = Explod
+trigger1 = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = Helper(90000005), command = "x" && Helper(90000005), command = "a"
+anim = 1
+ID = 90000800
+removeTime = 3 
+pauseMoveTime = 3 
+superMoveTime = 3 
+ignoreHitPause = 1
 
 ;==============================================================================================
 ;=============================<DIRECTIONAL INPUTS (3 TICK BUFFER)>=============================
