@@ -874,7 +874,7 @@ trigger1 = (Helper(90000005), command = "dback" || (Helper(90000005), command = 
 trigger2 = NumExplod(92828282) || NumExplod(92468246)
 trigger2 = (Helper(90000005), command = "uback" || (Helper(90000005), command = "holdup" && Helper(90000005), command = "holdback")) && Helper(90000005), command != "fwd" && Helper(90000005), command != "down" && Helper(90000005), command != "holdfwd" && Helper(90000005), command != "holddown"
 anim = 1
-ID = 900000021
+ID = 90000021
 removeTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 3 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
