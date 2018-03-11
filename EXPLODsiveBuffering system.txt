@@ -95,8 +95,8 @@
 ;R, U, L, D:					(360)				90011502
 ;U, R, D, L:					(360)				90011604
 ;U, L, D, R:					(360)				90011706
-;U, UR, R:					(UP-QCF)				90011806
-;U, UL, L:					(UP-QCB)				90011904
+;U, UR, R:					(UP-QCF)			90011806
+;U, UL, L:					(UP-QCB)			90011904
 ;R, D, L, R:					(HCB, F)			90012016
 ;L, D, R, L:					(HCF, B)			90012114
 ;R, L, R:					(F, B, F)			90012216
@@ -134,7 +134,11 @@
 
 ;SUPER MOTIONS (button inputs)
 ;x, x, F, a, z:					(Shun Goku Satsu)		94000220
-
+;x, y, F, b, b:					(Midnight Pleasure)		94010241
+;y, z, B, b, c:					(Black Hayato)			94020250
+;x, y, B, y, z:					(Eternal Slumber)		94030220
+;c, x, D, a, z:					(Tour De Magie)			94040220
+;z, a, B, x, x:					(Otoko Michi)			94050211
 
 
 ;==============================================================================================
@@ -5763,6 +5767,344 @@ ID = 94000220
 removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
 superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;==========================<MIDNIGHT PLEASURE/x, y, FORWARD, b, b>=============================
+;==============================================================================================
+
+[State -1, x, y, F, b, b: x]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94010200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, y, F, b, b: y]
+type = Explod
+triggerAll = NumExplod(94010200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94010210
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, y, F, b, b: Forward]
+type = Explod
+triggerAll = NumExplod(94010210)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = ifElse(P2dist x < 0 && StateType != A, Facing = -1, Facing = 1)
+trigger1 = (Helper(90000005), command = "fwd" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "ufwd") && Helper(90000005), command != "back"
+trigger2 = ifElse(P2dist x < 0 && StateType != A, Facing = 1, Facing = -1)
+trigger2 = (Helper(90000005), command = "back" || Helper(90000005), command = "dback" || Helper(90000005), command = "uback") && Helper(90000005), command != "fwd"
+anim = 1
+ID = 94010006
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, y, F, b, b: 2nd b]
+type = Explod
+triggerAll = NumExplod(94010240)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "b"
+anim = 1
+ID = 94010241
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+[State -1, x, y, F, b, b: 1st b]
+type = Explod
+triggerAll = NumExplod(94010006)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "b"
+anim = 1
+ID = 94010240
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1 
+
+
+
+;==============================================================================================
+;==========================<BLACK HAYATO/y, z, BACK, b, c>=============================
+;==============================================================================================
+
+[State -1, y, z, B, b, c: y]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94020210
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, y, z, B, b, c: z]
+type = Explod
+triggerAll = NumExplod(94020210)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "z"
+anim = 1
+ID = 94020220
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, y, z, B, b, c: Back]
+type = Explod
+triggerAll = NumExplod(94020220)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = ifElse(P2dist x < 0 && StateType != A, Facing = -1, Facing = 1)
+trigger1 = (Helper(90000005), command = "back" || Helper(90000005), command = "dback" || Helper(90000005), command = "uback") && Helper(90000005), command != "fwd"
+trigger2 = ifElse(P2dist x < 0 && StateType != A, Facing = 1, Facing = -1)
+trigger2 = (Helper(90000005), command = "fwd" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "ufwd") && Helper(90000005), command != "back"
+anim = 1
+ID = 94020004
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, y, z, B, b, c: b]
+type = Explod
+triggerAll = NumExplod(94020004)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "b"
+anim = 1
+ID = 94020240
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, y, z, B, b, c: c]
+type = Explod
+triggerAll = NumExplod(94020240)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "c"
+anim = 1
+ID = 94020250
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;==========================<ETTERNAL SLUMBER/x, y, Back, y, z >=============================
+;==============================================================================================
+
+[State -1, x, y, B, y, z : x]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94030200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1,x, y, B, y, z : 2nd y]
+type = Explod
+triggerAll = NumExplod(94030004)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94030211
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, y, B, y, z : Back]
+type = Explod
+triggerAll = NumExplod(94030210)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = ifElse(P2dist x < 0 && StateType != A, Facing = -1, Facing = 1)
+trigger1 = (Helper(90000005), command = "back" || Helper(90000005), command = "dback" || Helper(90000005), command = "uback") && Helper(90000005), command != "fwd"
+trigger2 = ifElse(P2dist x < 0 && StateType != A, Facing = 1, Facing = -1)
+trigger2 = (Helper(90000005), command = "fwd" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "ufwd") && Helper(90000005), command != "back"
+anim = 1
+ID = 94030004
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, y, B, y, z : 1st y]
+type = Explod
+triggerAll = NumExplod(94030200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94030210
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, y, B, y, z : z]
+type = Explod
+triggerAll = NumExplod(94030211)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "z"
+anim = 1
+ID = 94030220
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;==========================<TOUR DE MAGIE/c, x, Down, a, z>=============================
+;==============================================================================================
+
+[State -1, c, x, D, a, z: c]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "c"
+anim = 1
+ID = 94040250
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, c, x, D, a, z: x]
+type = Explod
+triggerAll = NumExplod(94040250)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94040200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, c, x, D, a, z: Down]
+type = Explod
+triggerAll = NumExplod(94040200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = (Helper(90000005), command = "down" || Helper(90000005), command = "dback" || Helper(90000005), command = "dfwd") && Helper(90000005), command != "up"
+anim = 1
+ID = 94040002
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, c, x, D, a, z: a]
+type = Explod
+triggerAll = NumExplod(94040002)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "a"
+anim = 1
+ID = 94040230
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, c, x, D, a, z: z]
+type = Explod
+triggerAll = NumExplod(94040230)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "z"
+anim = 1
+ID = 94040220
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;==========================<OTOKO MICHI/ z, a, B, x, x>=============================
+;==============================================================================================
+
+[State -1,  z, a, B, x, x: z]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "z"
+anim = 1
+ID = 94050220
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1,  z, a, B, x, x: a]
+type = Explod
+triggerAll = NumExplod(94050220)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "a"
+anim = 1
+ID = 94050230
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1,  z, a, B, x, x: Back]
+type = Explod
+triggerAll = NumExplod(94050230)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = ifElse(P2dist x < 0 && StateType != A, Facing = -1, Facing = 1)
+trigger1 = (Helper(90000005), command = "back" || Helper(90000005), command = "dback" || Helper(90000005), command = "uback") && Helper(90000005), command != "fwd"
+trigger2 = ifElse(P2dist x < 0 && StateType != A, Facing = 1, Facing = -1)
+trigger2 = (Helper(90000005), command = "fwd" || Helper(90000005), command = "dfwd" || Helper(90000005), command = "ufwd") && Helper(90000005), command != "back"
+anim = 1
+ID = 94050004
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, z, a, B, x, x: 2nd x]
+type = Explod
+triggerAll = NumExplod(94050200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94050211
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, z, a, B, x, x: 1st x]
+type = Explod
+triggerAll = NumExplod(94050004)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94050200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
 ignoreHitPause = 1
 
 
