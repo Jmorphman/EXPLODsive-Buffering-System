@@ -2698,7 +2698,7 @@ ignoreHitPause = 1
 type = Explod
 triggerAll = var(48) > 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
-trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back"
 anim = 1
 ID = 90030606
 removeTime = var(48)
@@ -2710,7 +2710,7 @@ ignoreHitPause = 1
 type = Explod
 triggerAll = NumExplod(90030606)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
-trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd"
 anim = 1
 ID = 90030604
 removeTime = var(48)
@@ -2737,7 +2737,7 @@ ignoreHitPause = 1
 type = Explod
 triggerAll = var(48) < 0
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
-trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd"
 anim = 1
 ID = 90030704
 removeTime = abs(var(48))
@@ -2749,7 +2749,7 @@ ignoreHitPause = 1
 type = Explod
 triggerAll = NumExplod(90030704)
 triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
-trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back"
 anim = 1
 ID = 90030706
 removeTime = abs(var(48))
@@ -6410,20 +6410,27 @@ trigger2 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000001)
 trigger3 = (ifElse(P2dist x < 0, Facing = -1, Facing = 1) && NumExplod(90000007)) || (ifElse(P2dist x < 0, Facing = 1, Facing = -1) && NumExplod(90000009))
 value = 120
 
-;These three ChangeStates are only in use when the character has landed from a jump after switching
-;sides, to get around a MUGEN bug where a character's directions don't switch until a tick has passed,
-;after they've landed from a jump and switched sides. Otherwise, MUGEN's default guard behavior works
-;well enough!
+;These three state controllers are only used in three siuations: when the character has landed from a jump
+;after switching sides (to get around a MUGEN bug where a character's directions don't switch until a
+;tick has passed, after they've landed from a jump and switched sides); if one of the control reversing
+;explods is active, or if (on a keyboard) two opposite directions are held simultaneously. For the first
+;two cases, guarding should still be possible, but in the third, guarding should be disabled. In all other
+;situations, MUGEN's default guard behavior works well enough!
+
+;The first state controller disables MUGEN's normal guard system if any of of these scenarios occur.
 [State -1, AssertSpecial: No StandGuard and NoCrouchGuard]
 type = AssertSpecial
 triggerAll = !AILevel
 trigger1 = P2dist x < 0 && StateType != A
 trigger2 = NumExplod(94646464) || NumExplod(92468246)
-trigger3 = !NumExplod(90000004) && !NumExplod(90000006) && !NumExplod(90000001) && !NumExplod(90000003) && !NumExplod(90000007) && !NumExplod(90000009)
+trigger3 = command = "holdback" && command = "holdfwd" || command = "holdup" && command = "holddown"
 flag = NoStandGuard
 flag2 = NoCrouchGuard
 ignoreHitPause = 0
 
+;The next two state controllers serve to manually direct the character into a guard state, but only
+;if the one of the first two situations occurs; the third scenario should not trigger guarding because
+;of the conflicting directional inputs.
 [State -1, Stand Blocking]
 type = ChangeState
 triggerAll = !AILevel
