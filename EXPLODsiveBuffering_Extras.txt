@@ -1,0 +1,1731 @@
+;----START COPY PASTE FOR -2 to go in chars for compatability---
+
+;this resets the var so he will go to state 5170 correctly in all instances
+[State -2, System Variable Set]
+type = VarSet
+trigger1 = StateType = S || Statetype = C
+sysvar(0) = 0
+ignorehitpause = 1
+
+[State -2, Sealed by Chizuru's Reigi no Ishizue]
+type = PalFX
+trigger1 = NumProjID(131035)
+trigger1 = GameTime % 2 = 1
+time = 1
+add = 0,0,92
+sinAdd = 0,0,0,0
+color = 0
+invertAll = 0
+color = 256
+ignoreHitPause = 1
+
+;===============Applying various status to opponent outside of custom states================
+[State -2, AssertSpecial]
+type = AssertSpecial
+trigger1 = enemy, NumExplod(99980000);create this explod ID and the opponent will become invisible if compatible
+flag = invisible
+ignorehitpause = 1
+
+[State -2, CtrlSet]
+type = CtrlSet
+trigger1 = enemy, NumExplod(99980001);create this explod ID and the opponent will lose ctrl if compatible
+value = 0
+
+[State -2, CtrlSet]
+type = CtrlSet
+trigger1 = enemy, NumExplod(99980002);create this explod ID and the opponent will gain ctrl if compatible
+value = 1
+
+
+
+;===============Pal FX applied by opponent================
+;MUGEN does not allow us to give P2 a PalFX outside of a custom state so this work around was developed
+;Use these expod ID ranges for their corresponding fx 
+;these are more SNK style with inverted colors
+;99991000 = Fire by O Illusionista
+;99991001 = Ice by O Illusionista
+;99991002 = Green Poison by O Illusionista
+;99991003 = Purple Poison by O Illusionista
+;99991004 = Blue Shock by O Illusionista
+;99991005 = B&W Shock by O Illusionista
+;99991006 = Evil Red by O Illusionista
+;99991007 = Evil Purple by O Illusionista
+;99991008 = Slow Pulse Fire by Elix
+;99991009 = Yellow/Orange Burn by Sander71113
+;99991010 = Blue/Violet/Crimson Burn  by Sander71113
+;99991011 = Red/Blood Burn by Sander71113
+;99991012 = Dust/Gray Burn by Sander71113
+;99991013 = Fade to Darker fade to brighter by Odb718
+;99991014 = Black and White Negative by Odb718
+;99991015 = Rainbow by altoiddealer
+;99991016 = White
+;99991017 = Red
+;99991018 = Blue
+;99991019 = Green
+;99991020 = Yellow
+;99991021 = Pink
+;99991022 = Light Blue
+;99991023 = Black
+
+;these make the fx not inverted more like Capcom
+;99992000 = Fire by O Illusionista
+;99992001 = Ice by O Illusionista
+;99992002 = Green Poison by O Illusionista
+;99992003 = Purple Poison by O Illusionista
+;99992004 = Blue Shock by O Illusionista
+;99992005 = B&W Shock by O Illusionista
+;99992006 = Evil Red by O Illusionista
+;99992007 = Evil Purple by O Illusionista
+;99992008 = Slow Pulse Fire by Elix
+;99992009 = Yellow/Orange Burn by Sander71113
+;99992010 = Blue/Violet/Crimson Burn  by Sander71113
+;99992011 = Red/Blood Burn by Sander71113
+;99992012 = Dust/Gray Burn by Sander71113
+;99992013 = Fade to Darker fade to brighter by Odb718
+;99992014 = Black and White Negative by Odb718
+;99992015 = Rainbow by altoiddealer
+
+[State -2, SNK Fire PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991000)
+time = 1
+add = Ceil(240 + 110 * sin(2 * pi * gametime / 10)),Ceil(50 + 55 * sin(2 * pi * gametime / 10)),Ceil(120 + 85 * sin(2 * pi * gametime / 10))
+mul = 250,224,120 
+color = 0 
+invertall = 1 
+ignorehitpause = 1
+
+[State -2, SNK Ice PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991001)
+time = 1
+add = Ceil(0 + 85 * sin(2 * pi * gametime / 10)),Ceil(50 + 55 * sin(2 * pi * gametime / 10)),Ceil(240 + 110 * sin(2 * pi * gametime / 10))
+mul = 120,224,150 
+color = 0 
+invertall = 1 
+ignorehitpause = 1
+
+[State -2, SNK Green Poison PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991002)
+time = 1
+add = Ceil(0 + 85 * sin(2 * pi * gametime / 10)),Ceil(100 + 110 * sin(2 * pi * gametime / 10)),Ceil(50 + 55 * sin(2 * pi * gametime / 10))
+mul = 20,120,24 
+color = 0 
+invertall = 1 
+ignorehitpause = 1
+
+[State -2, SNK Purple Poison PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991003)
+time = 1
+add = Ceil(100 + 85 * sin(2 * pi * gametime / 10)),Ceil(0 + 110 * sin(2 * pi * gametime / 10)),Ceil(100 + 55 * sin(2 * pi * gametime / 10))
+mul = 120,20,124 
+color = 0 
+invertall = 1 
+ignorehitpause = 1
+
+[State -2, SNK Blue Shock PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991004)
+time = 1
+add = Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(180 -80 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK B&W Shock PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991005)
+time = 1
+add = Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(100 -80 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK Evil Red PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991006)
+time = 1
+add = Ceil(0 + 40 * sin(2 * pi * gametime / 10)),Ceil(-200 + 80 * sin(2 * pi * gametime / 10)),Ceil(-200 + 40 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK Evil Purple PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991007)
+time = 1
+add = Ceil(0 + 40 * sin(2 * pi * gametime / 10)),Ceil(-200 + 80 * sin(2 * pi * gametime / 10)),Ceil(0 + 40 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK Slow Pulse Fire PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991008)
+time = 1
+add = Ceil(224 -160 * sin(2 * pi * gametime / 14)),Ceil(68 -160 * sin(2 * pi * gametime / 14)),Ceil(-40 -160 * sin(2 * pi * gametime / 14))
+mul = 256,192,128
+color = 0
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK Yellow/Orange Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991009)
+time = 1
+add = Ceil(40 + 40 * sin(2 * pi * gametime / 10)),Ceil(-70 + 30 * sin(2 * pi * gametime / 10)),Ceil(-200 + 0 * sin(2 * pi * gametime / 10))
+color     = 0                                             
+invertall = 1   
+ignorehitpause = 1
+
+[State -2, SNK Blue/Violet/Crimson Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991010)
+time = 1
+add = Ceil(-104 + 56 * sin(2 * pi * gametime / 10)),Ceil(-104 + 56 * sin(2 * pi * gametime / 10)),Ceil(7 + 0 * sin(2 * pi * gametime / 10))
+color     = 0
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK Red/Blood Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991011)
+time = 1
+add = Ceil(7 + 30 * sin(2 * pi * gametime / 10)),Ceil(-200 + 30 * sin(2 * pi * gametime / 10)),Ceil(-200 + 0 * sin(2 * pi * gametime / 10))
+color     = 0                                            
+invertall = 1  
+ignorehitpause = 1
+
+[State -2, SNK Dust/Gray Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991012)
+time = 1
+add = Ceil(-100 -10 * sin(2 * pi * gametime / 10)),Ceil(-100 -10 * sin(2 * pi * gametime / 10)),Ceil(-100 -10 * sin(2 * pi * gametime / 10))
+color     = 0
+invertall = 1
+ignorehitpause = 1
+
+[State -2, SNK Fade to Darker fade to brighter PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991013)
+time = 1
+add = Ceil(0 -65 * sin(2 * pi * gametime / 26)),Ceil(0 -65 * sin(2 * pi * gametime / 26)),Ceil(0 -65 * sin(2 * pi * gametime / 26))
+mul = 164,164,164
+invertall = 1
+color = 256
+ignorehitpause = 1
+
+[State -2, SNK Black and White Negative PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991014)
+time = 1
+add = Ceil(0 + 55 * sin(2 * pi * gametime / 10)),Ceil(0 + 55 * sin(2 * pi * gametime / 10)),Ceil(0 + 55 * sin(2 * pi * gametime / 10))
+mul = 200,200,200
+invertall = 1
+color = 0 
+ignorehitpause = 1
+
+[State -2, SNK Rainbow PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991015)
+time = 1
+add = Floor(sin(GameTime/8)*64),Floor(sin((GameTime-85)/8)*64),Floor(sin((GameTime-170)/8)*64)
+invertall = 1 
+ignorehitpause = 1
+
+[State 0, White PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991016)
+time = 1
+add = 256,256,256
+mul = 256,256,256
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Red PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991017)
+time = 1
+add = 256,0,0
+mul = 256,0,0
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Blue PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991018)
+time = 1
+add = 0,0,256
+mul = 0,0,256
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Green PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991019)
+time = 1
+add = 0,256,0
+mul = 0,256,0
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Yellow PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991020)
+time = 1
+add = 256,256,0
+mul = 256,256,0
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Pink PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991021)
+time = 1
+add = 256,0,256
+mul = 256,0,256
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Light Blue PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991022)
+time = 1
+add = 0,256,256
+mul = 0,256,256
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State 0, Black PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99991023)
+time = 1
+add = 256,256,256
+mul = 0,0,0
+sinadd = 0,0,0,1
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State -2, CAPCOM Fire PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992000)
+time = 1
+add = Ceil(240 + 110 * sin(2 * pi * gametime / 10)),Ceil(50 + 55 * sin(2 * pi * gametime / 10)),Ceil(120 + 85 * sin(2 * pi * gametime / 10))
+mul = 250,224,120 
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Ice PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992001)
+time = 1
+add = Ceil(0 + 85 * sin(2 * pi * gametime / 10)),Ceil(50 + 55 * sin(2 * pi * gametime / 10)),Ceil(240 + 110 * sin(2 * pi * gametime / 10))
+mul = 120,224,150 
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Green Poison PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992002)
+time = 1
+add = Ceil(0 + 85 * sin(2 * pi * gametime / 10)),Ceil(100 + 110 * sin(2 * pi * gametime / 10)),Ceil(50 + 55 * sin(2 * pi * gametime / 10))
+mul = 20,120,24 
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Purple Poison PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992003)
+time = 1
+add = Ceil(100 + 85 * sin(2 * pi * gametime / 10)),Ceil(0 + 110 * sin(2 * pi * gametime / 10)),Ceil(100 + 55 * sin(2 * pi * gametime / 10))
+mul = 120,20,124 
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Blue Shock PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992004)
+time = 1
+add = Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(180 -80 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM B&W Shock PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992005)
+time = 1
+add = Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(100 -80 * sin(2 * pi * gametime / 10)),Ceil(100 -80 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Evil Red PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992006)
+time = 1
+add = Ceil(0 + 40 * sin(2 * pi * gametime / 10)),Ceil(-200 + 80 * sin(2 * pi * gametime / 10)),Ceil(-200 + 40 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Evil Purple PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992007)
+time = 1
+add = Ceil(0 + 40 * sin(2 * pi * gametime / 10)),Ceil(-200 + 80 * sin(2 * pi * gametime / 10)),Ceil(0 + 40 * sin(2 * pi * gametime / 10))
+color = 0 
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Slow Pulse Fire PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992008)
+time = 1
+add = Ceil(224 -160 * sin(2 * pi * gametime / 14)),Ceil(68 -160 * sin(2 * pi * gametime / 14)),Ceil(-40 -160 * sin(2 * pi * gametime / 14))
+mul = 256,192,128
+color = 0
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Yellow/Orange Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992009)
+time = 1
+add = Ceil(40 + 40 * sin(2 * pi * gametime / 10)),Ceil(-70 + 30 * sin(2 * pi * gametime / 10)),Ceil(-200 + 0 * sin(2 * pi * gametime / 10))
+color     = 0                                        
+invertall = 0  
+ignorehitpause = 1
+
+[State -2, CAPCOM Blue/Violet/Crimson Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992010)
+time = 1
+add = Ceil(-104 + 56 * sin(2 * pi * gametime / 10)),Ceil(-104 + 56 * sin(2 * pi * gametime / 10)),Ceil(7 + 0 * sin(2 * pi * gametime / 10))
+color     = 0
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Red/Blood Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992011)
+time = 1
+add = Ceil(7 + 30 * sin(2 * pi * gametime / 10)),Ceil(-200 + 30 * sin(2 * pi * gametime / 10)),Ceil(-200 + 0 * sin(2 * pi * gametime / 10))
+color     = 0 
+ignorehitpause = 1
+
+[State -2, CAPCOM Dust/Gray Burn PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992012)
+time = 1
+add = Ceil(-100 -10 * sin(2 * pi * gametime / 10)),Ceil(-100 -10 * sin(2 * pi * gametime / 10)),Ceil(-100 -10 * sin(2 * pi * gametime / 10))
+color     = 0
+invertall = 0
+ignorehitpause = 1
+
+[State -2, CAPCOM Fade to Darker fade to brighter PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992013)
+time = 1
+add = Ceil(0 -65 * sin(2 * pi * gametime / 26)),Ceil(0 -65 * sin(2 * pi * gametime / 26)),Ceil(0 -65 * sin(2 * pi * gametime / 26))
+mul = 164,164,164
+invertall = 0
+color = 256
+ignorehitpause = 1
+
+[State -2, CAPCOM Black and White Negative PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992014)
+time = 1
+add = Ceil(0 + 55 * sin(2 * pi * gametime / 10)),Ceil(0 + 55 * sin(2 * pi * gametime / 10)),Ceil(0 + 55 * sin(2 * pi * gametime / 10))
+mul = 200,200,200
+invertall = 0
+color = 0 
+ignorehitpause = 1
+
+[State -2, CAPCOM Rainbow PalFX]
+type = PalFX
+trigger1 = enemy, NumExplod(99992015)
+time = 1
+add = Floor(sin(GameTime/8)*64),Floor(sin((GameTime-85)/8)*64),Floor(sin((GameTime-170)/8)*64)
+invertall = 0
+ignorehitpause = 1
+
+
+;===============poisoning P2 see state 1510 for more info================
+
+;ID ranges include; each represents how much life per tick is lost
+;99990000 = -1
+;99990001 = -2
+;99990002 = -3
+;99990003 = -4
+;99990004 = -5
+;99990005 = -10
+;99990006 = -15
+;99990007 = -20
+;99990008 = -25
+;99990009 = -30
+;ID ranges include; each represents how much life per tick is gained
+;99990010 = +1
+;99990011 = +2
+;99990012 = +3
+;99990013 = +4
+;99990014 = +5
+;99990015 = +10
+;99990016 = +15
+;99990017 = +20
+;99990018 = +25
+;99990019 = +30
+
+;this explod tells how long the duration of poison should last
+[State 0, Explod]
+type = Explod
+trigger1 = NumProjID(99990000)
+anim = 1
+ID = 99990000
+removetime = 300 ;adjusts how long p2 is in poison status
+removeongethit = 1 ;removes poison when you are hit
+ignorehitpause = 1
+
+;this explod tells how long the duration of poison PalFX should last
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990000)
+anim = 1
+ID = 99992003
+removetime = 1 
+ignorehitpause = 1
+
+;ID ranges include; each represents how much life per tick is lost
+;99990020 = -1
+;99990021 = -2
+;99990022 = -3
+;99990023 = -4
+;99990024 = -5
+;99990025 = -10
+;99990026 = -15
+;99990027 = -20
+;99990028 = -25
+;99990029 = -30
+;ID ranges include; each represents how much life per tick is gained
+;99990030 = +1
+;99990031 = +2
+;99990032 = +3
+;99990033 = +4
+;99990034 = +5
+;99990035 = +10
+;99990036 = +15
+;99990037 = +20
+;99990038 = +25
+;99990039 = +30
+
+;this explod tells how frequently the poison should take life
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990000)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990020
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990001)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990021
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990002)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990022
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990003)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990023
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990004)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990024
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990005)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990025
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990006)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990026
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990007)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990027
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990008)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990028
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990009)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990029
+removetime = 1
+
+;this explod tells how frequently the poison should give life
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990010)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990030
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990011)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990031
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990012)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990032
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990013)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990033
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990014)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990034
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990015)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990035
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990016)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990036
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990017)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990037
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990018)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990038
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990019)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990039
+removetime = 1
+
+;===============poisoning yourself see state 1520 for more info================
+
+;ID ranges include; each represents how much life per tick is lost
+;99990040 = -1
+;99990041 = -2
+;99990042 = -3
+;99990043 = -4
+;99990044 = -5
+;99990045 = -10
+;99990046 = -15
+;99990047 = -20
+;99990048 = -25
+;99990049 = -30
+;ID ranges include; each represents how much life per tick is gained
+;99990050 = +1
+;99990051 = +2
+;99990052 = +3
+;99990053 = +4
+;99990054 = +5
+;99990055 = +10
+;99990056 = +15
+;99990057 = +20
+;99990058 = +25
+;99990059 = +30
+
+;this explod tells how long the duration of poison should last
+[State 0, Explod]
+type = Explod
+trigger1 = NumProjID(99990040)
+anim = 1
+ID = 99990040
+removetime = 300
+
+[State 0, RemoveExplod];removes poison when you hit P2
+type = RemoveExplod
+trigger1 = P2MoveType = H
+id = 99990040
+ignorehitpause = 1
+
+;this explod tells how long the duration of poison PalFX should last
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990040)
+anim = 1
+ID = 1509
+removetime = 1
+ignorehitpause = 1
+
+[State 0, RemoveExplod];removes poison PalFX when you hit P2
+type = RemoveExplod
+trigger1 = P2MoveType = H
+id = 1509
+ignorehitpause = 1
+
+;ID ranges include; each represents how much life per tick is lost
+;99990060 = -1
+;99990061 = -2
+;99990062 = -3
+;99990063 = -4
+;99990064 = -5
+;99990065 = -10
+;99990066 = -15
+;99990067 = -20
+;99990068 = -25
+;99990069 = -30
+;ID ranges include; each represents how much life per tick is gained
+;99990070 = +1
+;99990071 = +2
+;99990072 = +3
+;99990073 = +4
+;99990074 = +5
+;99990075 = +10
+;99990076 = +15
+;99990077 = +20
+;99990078 = +25
+;99990079 = +30
+
+;this explod tells how frequently the poison should take or give life
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990040)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990060
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990041)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990061
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990042)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990062
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990043)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990063
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990044)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990064
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990045)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990065
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990046)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990066
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990047)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990067
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990048)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990068
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990049)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990069
+removetime = 1
+
+;this explod tells how frequently the poison should take or give life
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(9999005)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990070
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990051)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990071
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990052)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990072
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990053)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990073
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990054)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990074
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990055)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990075
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990056)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990076
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990057)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990077
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990058)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990078
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990059)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often the poison takes/gives life
+anim = 1
+ID = 99990079
+removetime = 1
+
+;===============it's time to take or give the life from poisoning================
+; opponent poisons you
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990020)
+value = -1
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990021)
+value = -2
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990022)
+value = -3
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990023)
+value = -4
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990024)
+value = -5
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990025)
+value = -10
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990026)
+value = -15
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990027)
+value =-20
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990028)
+value = -25
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990029)
+value = -30
+kill = 0
+
+; opponent heals you
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990030)
+value = 1
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990031)
+value = 2
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990032)
+value = 3
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990033)
+value = 4
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990034)
+value = 5
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990035)
+value = 10
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990036)
+value = 15
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990037)
+value = 20
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990038)
+value = 25
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = enemy, NumExplod(99990039)
+value = 30
+kill = 0
+
+;you poison yourself
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990060)
+value = -1
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990061)
+value = -2
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990062)
+value = -3
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990063)
+value = -4
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990064)
+value = -5
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990065)
+value = -10
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990066)
+value = -15
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990067)
+value = -20
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990068)
+value = -25
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990069)
+value = -30
+kill = 0
+
+;you heal yourself
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990070)
+value = 1
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990071)
+value = 2
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990072)
+value = 3
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990073)
+value = 4
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990074)
+value = 5
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990075)
+value = 10
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990076)
+value = 15
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990077)
+value = 20
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990078)
+value = 25
+kill = 0
+[State 0, LifeAdd]
+type = LifeAdd
+trigger1 = NumExplod(99990079)
+value = 30
+kill = 0
+
+;===============taking power from P2: this is pretty much identical to poisoning so no examples are given in char================
+
+;ID ranges include; each represents how much meter per tick is lost
+;99990100 = -1
+;99990101 = -2
+;99990102 = -3
+;99990103 = -4
+;99990104 = -5
+;99990105 = -10
+;99990106 = -15
+;99990107 = -20
+;99990108 = -25
+;99990109 = -30
+;ID ranges include; each represents how much meter per tick is gained
+;99990110 = +1
+;99990111 = +2
+;99990112 = +3
+;99990113 = +4
+;99990114 = +5
+;99990115 = +10
+;99990116 = +15
+;99990117 = +20
+;99990118 = +25
+;99990119 = +30
+
+;this explod tells how long the duration of meter drain/give should last
+[State 0, Explod]
+type = null;Explod
+trigger1 = NumProjID(99990100)
+anim = 1
+ID = 99990100
+removetime = 300 ;adjusts how long p2 is meter drain/give status
+removeongethit = 1 ;removes status when you are hit
+
+;ID ranges include; each represents how much meter per tick is lost
+;99990120 = -1
+;99990121 = -2
+;99990122 = -3
+;99990123 = -4
+;99990124 = -5
+;99990125 = -10
+;99990126 = -15
+;99990127 = -20
+;99990128 = -25
+;99990129 = -30
+;ID ranges include; each represents how much meter per tick is gained
+;99990130 = +1
+;99990131 = +2
+;99990132 = +3
+;99990133 = +4
+;99990134 = +5
+;99990135 = +10
+;99990136 = +15
+;99990137 = +20
+;99990138 = +25
+;99990139 = +30
+
+;this explod tells how frequently to take meter
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990100)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990120
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990101)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990121
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990102)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990122
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990103)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990123
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990104)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990124
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990105)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990125
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990106)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990126
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990107)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990127
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990108)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990128
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990109)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990129
+removetime = 1
+
+;this explod tells how frequently to give meter
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990110)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990130
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990111)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990131
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990112)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990132
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990113)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990133
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990114)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990134
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990105)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990135
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990116)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990136
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990117)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990137
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990118)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990138
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990119)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990139
+removetime = 1
+
+;===============poisoning yourself see state 1520 for more info================
+
+;ID ranges include; each represents how much life per tick is lost
+;99990140 = -1
+;99990141 = -2
+;99990142 = -3
+;99990143 = -4
+;99990144 = -5
+;99990145 = -10
+;99990146 = -15
+;99990147 = -20
+;99990148 = -25
+;99990149 = -30
+;ID ranges include; each represents how much life per tick is gained
+;99990150 = +1
+;99990151 = +2
+;99990152 = +3
+;99990153 = +4
+;99990154 = +5
+;99990155 = +10
+;99990156 = +15
+;99990157 = +20
+;99990158 = +25
+;99990159 = +30
+
+;this explod tells how long the duration of taking/giving meter should last
+[State 0, Explod]
+type = Null;Explod
+trigger1 = NumProjID(99990140)
+anim = 1
+ID = 99990140
+removetime = 300
+
+[State 0, RemoveExplod];removes meter status when you hit P2
+type = Null;RemoveExplod
+trigger1 = P2MoveType = H
+id = 99990140
+ignorehitpause = 1
+
+;ID ranges include; each represents how much life per tick is lost
+;99990160 = -1
+;99990161 = -2
+;99990162 = -3
+;99990163 = -4
+;99990164 = -5
+;99990165 = -10
+;99990166 = -15
+;99990167 = -20
+;99990168 = -25
+;99990169 = -30
+;ID ranges include; each represents how much life per tick is gained
+;99990170 = +1
+;99990171 = +2
+;99990172 = +3
+;99990173 = +4
+;99990174 = +5
+;99990175 = +10
+;99990176 = +15
+;99990177 = +20
+;99990178 = +25
+;99990179 = +30
+
+;this explod tells how frequently the status should take or give meter
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990140)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990160
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990141)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990161
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990142)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990162
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990143)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990163
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990144)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990164
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990145)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990165
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990146)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990166
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990147)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990167
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990148)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990168
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990149)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990169
+removetime = 1
+
+;this explod tells how frequently the status should take or give meter
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990150)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990170
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990151)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990171
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990152)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990172
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990153)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990173
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990154)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990174
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990155)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990175
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990156)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990176
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990157)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990177
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990158)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990178
+removetime = 1
+[State 0, Explod]
+type = Explod
+trigger1 = NumExplod(99990159)
+trigger1 = GameTime%15 = 0 ;edit gametime% to change how often it takes/gives meter
+anim = 1
+ID = 99990179
+removetime = 1
+
+;===============it's time to take or give the meter================
+; opponent drains meter
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990120)
+value = -1
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990121)
+value = -2
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990122)
+value = -3
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990123)
+value = -4
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990124)
+value = -5
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990125)
+value = -10
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990126)
+value = -15
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990127)
+value =-20
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990128)
+value = -25
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990129)
+value = -30
+
+
+; opponent gives meter
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990130)
+value = 1
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990131)
+value = 2
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990132)
+value = 3
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990133)
+value = 4
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990134)
+value = 5
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990135)
+value = 10
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990136)
+value = 15
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990137)
+value = 20
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990138)
+value = 25
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = enemy, NumExplod(99990139)
+value = 30
+
+
+;you take your own meter
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990160)
+value = -1
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990161)
+value = -2
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990162)
+value = -3
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990163)
+value = -4
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990164)
+value = -5
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990165)
+value = -10
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990166)
+value = -15
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990167)
+value = -20
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990168)
+value = -25
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990169)
+value = -30
+
+
+;you add to your own meter
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990170)
+value = 1
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990171)
+value = 2
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990172)
+value = 3
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990173)
+value = 4
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990174)
+value = 5
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990175)
+value = 10
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990176)
+value = 15
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990177)
+value = 20
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990178)
+value = 25
+
+[State 0, PowerAdd]
+type = PowerAdd
+trigger1 = NumExplod(99990179)
+value = 30
+;---END COPY PASTE CODE FOR -2---

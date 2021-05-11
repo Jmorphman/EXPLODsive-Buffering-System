@@ -1,0 +1,391 @@
+;===============================<(SNK) CHARGE BACK, FORWARD>================================
+
+;==============================================================================================
+;This is somewhat similar to the Capcom style of charge moves, but we won't be keeping track of
+;the "back" charge, instead, we're gonna be keeping track of how long the player has held left or
+;right: when a character facing either direction holds left, var(47) will increase by one every tick.
+;And when a character (again, facing any direction) holds right, var(47) will *decrease* by one every
+;tick. If at any point the character stops holding the direction they were holding, var(47) will be reset
+;to 0.
+
+;So, if var(47) is greater than or equal to 45, then that means the player has sufficiently charged left
+;enough to perform a charge back, forward move (provided they are facing to the right). And if var(47) is
+;less than or equal to -45, the player has sufficiently charged right long enough to perform a charge back,
+;forward move (if they're facing to the left).
+
+;As with the Capcom method of charge moves, var(48) is set to 10 (Capcom has a 16 tick charge buffer SNK
+;uses a 10 tick one) once var(47) has incremented (or decremented) enough. This is our charge buffer, and
+;as long as it's non-zero, we are able to perform a charge move. var(48) will slowly start counting down to
+;0, however, if the player stops hold left or right!
+
+;An additional note: SNK allows charging during hitpause, while Capcom does not.
+
+;A note about AI: we have opted to only have the charge variables trigger for human controlled players,
+;but if you want the character to simulate charging up charge moves when played by an AI, the best way of
+;doing so would be to have the AI also utilize these variables. A commonly-used example of how one might
+;implement this would be to have the AI always increment the Left/Right (and Down, if used) charge variables
+;[var(47) and var(49), respectively], and then to have various triggers in the Left/Right (and Down) Charge
+;Reset sctrls that reset the charge variable to 0. For example, if the character were to walk forward, or go
+;to idle, it would look weird if they then performed a charge move, so those would be good triggers to have for
+;the reset sctrls. You should also reset the charge variables when the AI-controlled character activates a
+;special or super move, so they won't be able to fire off another charge move immediately after performing
+;their current move!
+;==============================================================================================
+[State -1, Left Charge Increment]
+type = VarAdd
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = Helper(90000005), command = "holdback"
+var(47) = 1
+ignoreHitPause = 1
+
+;this will only activate if var(47) is greater than zero; this is to avoid this VarSet from activating
+;when the player is charging right
+[State -1, Left Charge Reset]
+type = VarSet
+triggerAll = var(47) > 0
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = Helper(90000005), command != "holdback" || Helper(90000005), command = "holdfwd"
+var(47) = 0
+ignoreHitPause = 1
+
+[State -1, Right Charge Increment]
+type = VarAdd
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = Helper(90000005), command = "holdfwd"
+var(47) = -1
+ignoreHitPause = 1
+
+[State -1, Right Charge Reset]
+type = VarSet
+triggerAll = var(47) < 0
+triggerAll = NumHelper(90000005) && !IsHelper
+trigger1 = !AILevel
+trigger1 = Helper(90000005), command != "holdfwd" || Helper(90000005), command = "holdback"
+var(47) = 0
+ignoreHitPause = 1
+
+[State -1, Left/Right Charge Buffer Activation]
+type = VarSet
+;we need to remember to check the absolute value of var(47), since in the SNK method, it can be
+;either positive or negative!
+trigger1 = abs(var(47)) >= 45
+;var(48) is only set to 10 (as opposed to 16 like the Capcom method) here because of the different
+;way the charge buffer works in SNK games; see below for a more detailed discussion of this.
+var(48) = ifElse(var(47) < 0, -10, 10)
+ignoreHitPause = 1
+
+[State -1, Left Charge Buffer Decrement]
+type = VarAdd
+trigger1 = abs(var(47)) < 45 && var(48) > 0
+var(48) = -1
+
+[State -1, Right Charge Buffer Decrement]
+type = VarAdd
+trigger1 = abs(var(47)) < 45 && var(48) < 0
+var(48) = 1
+
+
+
+;==============================================================================================
+;Much like with Capcom-style charge moves, the length of time the command is active behaves very
+;differently than with standard commands: instead of having the RemoveTime be a constant value,
+;we use the current value of the charge buffer, var(48).
+;==============================================================================================
+
+;=================================<(SNK) CHARGE LEFT, RIGHT>===================================
+;we only need one command explod for this move, since we already know that the player has been
+;inputting the opposite direction!
+[State -1, Charge Left, Right: Right]
+type = Explod
+triggerAll = var(48) > 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90010606
+removeTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = var(48) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;=================================<(SNK) CHARGE RIGHT, LEFT>===================================
+[State -1, Charge Right, Left: Left]
+type = Explod
+triggerAll = var(48) < 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90010704
+removeTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = abs(var(48)) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;=========================<(SNK) CHARGE BACK, FORWARD, BACK, FORWARD>==========================
+;==============================================================================================
+
+;==============================================================================================
+;This is extremely similar to the QCFx2/QCBx2 code, only with slight adjustments made to make it
+;fit the format of a charge move. Also note that opposed to the way the standard/special charge
+;command works, you're given a constant 10 ticks of input window between each command, instead of
+;having to complete the entire move before var(48) ticks down to zero.
+;==============================================================================================
+
+;===========================<(SNK) CHARGE LEFT, RIGHT, LEFT, RIGHT>============================
+
+[State -1, Charge Left, Right, Left, Right: 1st Right]
+type = Explod
+triggerAll = var(48) > 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back"
+anim = 1
+ID = 90030606
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Left, Right, Left, Right: 2nd Left]
+type = Explod
+triggerAll = NumExplod(90030606)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd"
+anim = 1
+ID = 90030604
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Left, Right, Left, Right: 2nd Right]
+type = Explod
+triggerAll = NumExplod(90030604)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90030616
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;===========================<(SNK) CHARGE RIGHT, LEFT, RIGHT, LEFT>============================
+[State -1, Charge Right, Left, Right, Left: 1st Left]
+type = Explod
+triggerAll = var(48) < 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd"
+anim = 1
+ID = 90030704
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Right, Left, Right, Left: 2nd Right]
+type = Explod
+triggerAll = NumExplod(90030704)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "fwd" && Helper(90000005), command != "back"
+anim = 1
+ID = 90030706
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Right, Left, Right, Left: 2nd Left]
+type = Explod
+triggerAll = NumExplod(90030706)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "back" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up" && Helper(90000005), command != "down"
+anim = 1
+ID = 90030714
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;===================================<(SNK) CHARGE DOWN, UP>====================================
+;==============================================================================================
+
+;==============================================================================================
+;This uses the exact same concept as the Back, Forward charge move, only things are much easier
+;since we don't have to deal with switching sides and having to have mirrored commands!
+
+;Do note that we use different variables [var(49) and var(50)] here.
+
+;The only differences between this and the Capcom method are that var(50) is set to 10, not 16.
+;==============================================================================================
+
+[State -1, Down Charge Increment]
+type = VarAdd
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !AIlevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "holddown"
+trigger2 = !AIlevel
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "holdup"
+var(49) = 1
+ignoreHitPause = 1
+
+[State -1, Down Charge Reset]
+type = VarSet
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command != "holddown" || Helper(90000005), command = "holdup"
+trigger2 = !AILevel
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command != "holdup" || Helper(90000005), command = "holddown"
+var(49) = 0
+ignoreHitPause = 1
+
+[State -1, Down Charge Buffer Activation]
+type = VarSet
+trigger1 = var(49) >= 45
+var(50) = 10
+ignoreHitPause = 1
+
+[State -1, Down Charge Buffer Decrement]
+type = VarAdd
+trigger1 = var(49) < 45 && var(50) > 0
+var(50) = -1
+
+[State -1, Charge Down, Up: Up]
+type = Explod
+triggerAll = var(50) > 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "up" && Helper(90000005), command != "down"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "down" && Helper(90000005), command != "up"
+anim = 1
+ID = 90010808
+removeTime = var(50) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = var(50) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = var(50) + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;================<(SNK) CHARGE DOWN-BACK, DOWN-FORWARD, DOWN-BACK, UP-FORWARD>=================
+;==============================================================================================
+
+;==============================================================================================
+;Almost identical to the charge Back, Forward, Back, Forward command, only we have to check var(50)
+;(to make sure down has been charged enough) in addition to checking var(48) (to make sure back has
+;been charged enough.
+
+;As with the SNK version of the charge Back, Forward, Back, Forward command, you're given a constant
+;10 ticks of input window between each command, instead of having to complete the entire move before
+;var(50) ticks down to zero.
+;==============================================================================================
+
+;==================<(SNK) CHARGE DOWN-LEFT, DOWN-RIGHT, DOWN-LEFT, UP-RIGHT>===================
+[State -1, Charge Down-Left, Down-Right, Down-Left, Up-Right: Down-Right]
+type = Explod
+triggerAll = var(48) > 0 && var(50) > 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+anim = 1
+ID = 90030803
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Down-Left, Down-Right, Down-Left, Up-Right: 2nd Down-Left]
+type = Explod
+triggerAll = NumExplod(90030803)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+anim = 1
+ID = 90030801
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Down-Left, Down-Right, Down-Left, Up-Right: Up-Right]
+type = Explod
+triggerAll = NumExplod(90030801)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = (Helper(90000005), command = "ufwd" || Helper(90000005), command = "up" || Helper(90000005), command = "uback") && Helper(90000005), command != "down"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = (Helper(90000005), command = "dfwd" || Helper(90000005), command = "down" || Helper(90000005), command = "dback") && Helper(90000005), command != "up"
+anim = 1
+ID = 90030809
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==================<(SNK) CHARGE DOWN-RIGHT, DOWN-LEFT, DOWN-RIGHT, UP-LEFT>===================
+[State -1, Charge Down-Right, Down-Left, Down-Right, Up-Left: Down-Left]
+type = Explod
+triggerAll = var(48) < 0 && var(50) > 0
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "dback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "uback" && Helper(90000005), command != "fwd" && Helper(90000005), command != "down"
+anim = 1
+ID = 90030901
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Down-Right, Down-Left, Down-Right, Up-Left: 2nd Down-Right]
+type = Explod
+triggerAll = NumExplod(90030901)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = Helper(90000005), command = "dfwd" && Helper(90000005), command != "back" && Helper(90000005), command != "up"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = Helper(90000005), command = "ufwd" && Helper(90000005), command != "back" && Helper(90000005), command != "down"
+anim = 1
+ID = 90030903
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, Charge Down-Right, Down-Left, Down-Right, Up-Left: Up-Left]
+type = Explod
+triggerAll = NumExplod(90030903)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = !NumExplod(92828282) && !NumExplod(92468246)
+trigger1 = (Helper(90000005), command = "uback" || Helper(90000005), command = "up" || Helper(90000005), command = "ufwd") && Helper(90000005), command != "down"
+trigger2 = NumExplod(92828282) || NumExplod(92468246)
+trigger2 = (Helper(90000005), command = "dback" || Helper(90000005), command = "down" || Helper(90000005), command = "dfwd") && Helper(90000005), command != "up"
+anim = 1
+ID = 90030907
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1

@@ -140,6 +140,9 @@
 ;x, y, B, y, z:					(Eternal Slumber)		94030220
 ;c, x, D, a, z:					(Tour De Magie)			94040220
 ;z, a, B, x, x:					(Otoko Michi)			94050211
+;x, a, y, b:					(Sans Culotte)			94060240
+;x, y, a, b:					(Ougi: Tajuu Genmu Ankei)	94070240
+;y, x, a, y:					(Bakuten)			94080230
 
 
 
@@ -6160,6 +6163,168 @@ triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
 trigger1 = Helper(90000005), command = "x"
 anim = 1
 ID = 94050200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;===========================<SANS CULOTTE/x, a, y, b>==============================
+;==============================================================================================
+
+[State -1, x, a, y, b: x]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94060200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, a, y, b: a]
+type = Explod
+triggerAll = NumExplod(94060200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "a"
+anim = 1
+ID = 94060230
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, a, y, b: y]
+type = Explod
+triggerAll = NumExplod(94060230)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94060210
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, a, y, b: b]
+type = Explod
+triggerAll = NumExplod(94060210)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "b"
+anim = 1
+ID = 94060240
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;===========================<OUGI: TAJUU GENMU ANKEI/x, y, a, b>==============================
+;==============================================================================================
+
+[State -1, x, a, y, b: x]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94070200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, a, y, b: a]
+type = Explod
+triggerAll = NumExplod(94070200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94070230
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, a, y, b: y]
+type = Explod
+triggerAll = NumExplod(94070210)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "a"
+anim = 1
+ID = 94070210
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, x, a, y, b: b]
+type = Explod
+triggerAll = NumExplod(94070230)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "b"
+anim = 1
+ID = 94070240
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+
+
+;==============================================================================================
+;===========================<BAKUTEN/y, x, a, y>==============================
+;==============================================================================================
+
+;This is the 2nd y input for this move, but it goes above the 1st y input because otherwise, a single
+;press of y would activate both explods! Placing it above the 1st means that y must be input twice, each
+;on separate ticks.
+[State -1, y, x, a, y: 2nd y]
+type = Explod
+triggerAll = NumExplod(94080230)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94080211
+removeTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+pauseMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+superMoveTime = 10 + ifElse(HitPauseTime, HitPauseTime - 1, 0)
+ignoreHitPause = 1
+
+[State -1, y, x, a, y: 1st y]
+type = Explod
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "y"
+anim = 1
+ID = 94080210
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, y, x, a, y: x]
+type = Explod
+triggerAll = NumExplod(94080210)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "x"
+anim = 1
+ID = 94080200
+removeTime = 10
+pauseMoveTime = 10
+superMoveTime = 10
+ignoreHitPause = 1
+
+[State -1, y, x, a, y: a]
+type = Explod
+triggerAll = NumExplod(94080200)
+triggerAll = NumHelper(90000005) && !IsHelper && !AILevel
+trigger1 = Helper(90000005), command = "a"
+anim = 1
+ID = 94080230
 removeTime = 10
 pauseMoveTime = 10
 superMoveTime = 10
